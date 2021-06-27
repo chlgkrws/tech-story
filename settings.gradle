@@ -1,0 +1,5 @@
+rootProject.name = 'k-velog'
+include 'kvelog-app-front'
+include 'kvelog-app-internal-api'
+include 'blog-domain'
+

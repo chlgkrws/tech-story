@@ -1,0 +1,13 @@
+spring:
+  profiles: local
+  thymeleaf:
+    prefix: file:src/main/resources/templates/
+    enabled: true
+    check-template-location: true
+    suffix: .html
+    mode: HTML5
+    cache: false
+    order: 0
+  devtools:
+    livereload:
+      enabled: true

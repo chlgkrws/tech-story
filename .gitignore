@@ -1,0 +1,4 @@
+# Project exclude paths
+/.gradle/
+/kvelog-app-front/build/
+/kvelog-app-front/build/classes/java/main/
