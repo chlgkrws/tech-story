@@ -8,6 +8,10 @@ spring:
     mode: HTML5
     cache: false
     order: 0
+  resources:
+    cache:
+      period: 0
+    static-locations: file:src/main/resources/static/
   devtools:
     livereload:
       enabled: true
