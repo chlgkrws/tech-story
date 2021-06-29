@@ -1,17 +1,16 @@
+server:
+  port: 8080
+
 spring:
-  profiles: local
   thymeleaf:
-    prefix: file:src/main/resources/templates/
     enabled: true
+    prefix: classpath:templates/
     check-template-location: true
     suffix: .html
-    mode: HTML5
+    mode: HTML
     cache: false
-    order: 0
-  resources:
-    cache:
-      period: 0
-    static-locations: file:src/main/resources/static/
   devtools:
     livereload:
       enabled: true
+  freemarker:
+    cache: false

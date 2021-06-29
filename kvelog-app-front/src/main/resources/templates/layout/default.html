@@ -5,22 +5,27 @@
         xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
 <head th:replace="layout/config :: configFragment"></head>
 <body>
-    <header th:replace="layout/header :: headerFragment"></header>
-    <div>
-        <ul class="nav justify-content-center">
+<header th:replace="layout/header :: headerFragment"></header>
+<div class="container-fluid">
+    <main role="main">
+        <ul class="nav nav-tabs nav-pills nav-fill">
             <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Active</a>
+                <a class="nav-link active" data-toggle="tab" href="#blog" role="tab">Blog</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Link</a>
+                <a class="nav-link" data-toggle="tab" href="#qna" role="tab">QnA</a>
             </li>
         </ul>
-        <main role="main">
-            <div layout:fragment="content">
+        <div class="tab-content active" id="nav-tabContent">
+            <div class="tab-pane fade show active" id="blog" role="tabpanel" aria-labelledby="nav-home-tab">
+                <div layout:fragment="content">
 
+                </div>
             </div>
-        </main> <!-- main -->
-    </div> <!-- .wrapper -->
-    <footer th:replace="layout/footer :: footerFragment"></footer>
+            <div class="tab-pane fade" id="qna" role="tabpanel" aria-labelledby="nav-profile-tab">qna</div>
+        </div>
+    </main>
+</div>
+<footer th:replace="layout/footer :: footerFragment"></footer>
 </body>
 </html>
