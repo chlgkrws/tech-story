@@ -7,7 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * <pre>
  * k-velog
  *
- * Description :
+ * Description : 내부 module api spring boot starter
  * </pre>
  *
  * @author LeeJH

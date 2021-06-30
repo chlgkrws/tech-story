@@ -1,13 +1,5 @@
-plugins {
-    id 'java'
-}
-
-group 'io.itm'
-version '1.0-SNAPSHOT'
-
-repositories {
-    mavenCentral()
-}
+bootJar.enabled = true
+jar.enabled = false
 
 dependencies {
     implementation project(':blog-domain')

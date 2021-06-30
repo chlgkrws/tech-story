@@ -1,1 +1,1 @@
-### 화면(Front) Module
+### 화면 Module(Application)

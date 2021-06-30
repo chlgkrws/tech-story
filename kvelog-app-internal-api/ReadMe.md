@@ -1,1 +1,1 @@
-### 내부 API Module
+### 내부 API Module(Application)

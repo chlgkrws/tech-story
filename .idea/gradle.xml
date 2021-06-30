@@ -4,12 +4,15 @@
   <component name="GradleSettings">
     <option name="linkedExternalProjectsSettings">
       <GradleProjectSettings>
+        <option name="delegatedBuild" value="false" />
+        <option name="testRunner" value="PLATFORM" />
         <option name="distributionType" value="DEFAULT_WRAPPED" />
         <option name="externalProjectPath" value="$PROJECT_DIR$" />
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/blog-domain" />
+            <option value="$PROJECT_DIR$/client-core" />
             <option value="$PROJECT_DIR$/kvelog-app-front" />
             <option value="$PROJECT_DIR$/kvelog-app-internal-api" />
           </set>

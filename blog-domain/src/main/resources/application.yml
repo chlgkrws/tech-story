@@ -1,0 +1,16 @@
+spring:
+  jpa:
+    hibernate:
+      format_sql: true
+      ddl-auto: create
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:tedtdb
+    driver-class-name: org.h2.Driver
+    data-username: sa
+    data-password: 1234
+logging.level:
+  org.hibernate.SQL: debug
