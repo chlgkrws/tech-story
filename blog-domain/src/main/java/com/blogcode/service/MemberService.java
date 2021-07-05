@@ -29,6 +29,10 @@ public class MemberService {
 
     private MemberRepository memberRepository;
 
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
     public Long signUp (Member member) {
         return memberRepository.save(member).getId();
     }

@@ -37,4 +37,13 @@ public class Member {
 
     @Column
     private String email;
+
+    public Member(String name, String email) {
+        this.name = name;
+        this.email = email;
+    }
+
+    public Member() {
+
+    }
 }

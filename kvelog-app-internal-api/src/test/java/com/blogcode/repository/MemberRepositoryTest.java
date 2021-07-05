@@ -1,7 +1,5 @@
 package com.blogcode.repository;
 
-import com.blogcode.domain.Member;
-import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -31,8 +29,10 @@ public class MemberRepositoryTest {
     @Autowired
     private MemberRepository memberRepository;
 
-    @Test
-    public void add () {
-        memberRepository.save(new Member("jinho", "zeeno@gsitm.com"));
-    }
+//    @Test
+//    public void add () {
+//        memberRepository.save(new Member("jinho", "zeeno@gsitm.com"));
+//        Member saved = memberRepository.findOne(1L);
+//        assertThat(saved.getName(), is("jojoldu"));
+//    }
 }
