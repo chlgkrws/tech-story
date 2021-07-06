@@ -1,13 +1,12 @@
 package com.blogcode.service;
 
 import com.blogcode.domain.Member;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import com.blogcode.repository.MemberRepository;
 
 /**
  * <pre>
- * com.blogcode.service
+ * com.blogcode.com.blogcode.service
  *
  * Description :
  * </pre>
@@ -24,10 +23,9 @@ import com.blogcode.repository.MemberRepository;
  * @since 2021.07.05
  */
 @Service
-@RequiredArgsConstructor
 public class MemberService {
 
-    private MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
     public MemberService(MemberRepository memberRepository) {
         this.memberRepository = memberRepository;

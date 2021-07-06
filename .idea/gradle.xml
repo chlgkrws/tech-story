@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/client-core" />
             <option value="$PROJECT_DIR$/kvelog-app-front" />
             <option value="$PROJECT_DIR$/kvelog-app-internal-api" />
+            <option value="$PROJECT_DIR$/member-domain" />
           </set>
         </option>
       </GradleProjectSettings>

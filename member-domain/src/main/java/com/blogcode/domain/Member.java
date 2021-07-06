@@ -1,6 +1,7 @@
 package com.blogcode.domain;
 
 import lombok.Getter;
+import lombok.RequiredArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 
 /**
  * <pre>
- * com.blogcode.domain
+ * com.blogcode.com.blogcode.domain
  *
  * Description :
  * </pre>
@@ -27,6 +28,7 @@ import javax.persistence.Id;
  */
 @Entity
 @Getter
+@RequiredArgsConstructor
 public class Member {
     @Id
     @GeneratedValue
@@ -41,9 +43,5 @@ public class Member {
     public Member(String name, String email) {
         this.name = name;
         this.email = email;
-    }
-
-    public Member() {
-
     }
 }

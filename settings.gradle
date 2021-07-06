@@ -2,6 +2,7 @@ rootProject.name = 'k-velog'
 
 include 'kvelog-app-front'
 include 'kvelog-app-internal-api'
-include 'blog-domain'
 include 'client-core'
+include 'blog-domain'
+include 'member-domain'
 

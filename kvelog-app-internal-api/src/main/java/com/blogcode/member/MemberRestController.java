@@ -1,4 +1,4 @@
-package com.blogcode.rest;
+package com.blogcode.member;
 
 import com.blogcode.domain.Member;
 import org.springframework.web.bind.annotation.GetMapping;
