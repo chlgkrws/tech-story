@@ -1,4 +1,4 @@
-package com.blogcode;
+package com;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -21,5 +21,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * </pre>
  * @since 2021.07.05
  */
+@SpringBootApplication
 public class BlogApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(BlogApplication.class, args);
+    }
 }
