@@ -5,6 +5,7 @@
       <map>
         <entry key="file://$PROJECT_DIR$/kvelog-app-front/src/main/resources/templates/layout/config.html" value="file://$PROJECT_DIR$/kvelog-app-front/src/main/resources/templates/layout" />
         <entry key="file://$PROJECT_DIR$/kvelog-app-front/src/main/resources/templates/layout/default.html" value="file://$PROJECT_DIR$/kvelog-app-front/src/main/resources/templates/layout" />
+        <entry key="file://$PROJECT_DIR$/kvelog-app-front/src/main/resources/templates/main.html" value="file://$PROJECT_DIR$/kvelog-app-front/src/main/resources/templates" />
       </map>
     </option>
   </component>
