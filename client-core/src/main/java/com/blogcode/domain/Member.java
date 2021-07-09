@@ -3,27 +3,12 @@ package com.blogcode.domain;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.GenerationType.IDENTITY;
 
-/**
- * <pre>
- * com.blogcode.com.blogcode.domain
- *
- * Description :
- * </pre>
- *
- * @author leejinho
- * @version 1.0
- * @see <pre>
- * == 개정이력(Modification Information) ==
- *
- * 수정일     수정자   수정내용
- * ---------- -------- -------------------
- * 2021.07.05 leejinho 최초 생성
- * </pre>
- * @since 2021.07.05
- */
+
 @Entity
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
@@ -31,19 +16,30 @@ import static javax.persistence.GenerationType.IDENTITY;
 public class Member {
 
     @Id @GeneratedValue(strategy = IDENTITY)
+    @Column(insertable = false, updatable = false)
     private Long id;
 
+    @Column(length = 100, nullable = false)
     private String email;
 
+    @Column(length = 200, nullable = false)
     private String password;
 
+    @Column(length = 50)
     private String name;
 
+    @Column(length = 100)
     private String emailPath;
 
+    @Column(length = 30)
     private String oauthType;
 
+    @Column(length = 200)
     private String profileImgPath;
 
+    @Column(columnDefinition = "TEXT")
     private String introduce;
+
+    @OneToMany(mappedBy = "member")
+    private List<Posts> postsList = new ArrayList<>();
 }
