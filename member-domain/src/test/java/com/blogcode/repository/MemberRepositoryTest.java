@@ -31,13 +31,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @DataJpaTest
 public class MemberRepositoryTest {
 
-    @Autowired
-    private MemberRepository memberRepository;
-
     @Test
     public void add () {
-        memberRepository.save(new Member("jojoldu", "jojoldu@gmail.com"));
-        Member saved = memberRepository.findById(1L).orElse(null);
-        assertThat(saved.getName(), is("jojoldu"));
+        //
     }
 }

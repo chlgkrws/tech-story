@@ -2,6 +2,7 @@ package com.blogcode.repository;
 
 import com.blogcode.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * <pre>
@@ -21,5 +22,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * </pre>
  * @since 2021.07.05
  */
+@Repository
 public interface MemberRepository extends JpaRepository<Member, Long> {
 }
