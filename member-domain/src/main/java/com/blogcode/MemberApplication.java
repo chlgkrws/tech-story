@@ -1,5 +1,9 @@
 package com.blogcode;
 
+import com.blogcode.domain.Member;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
 /**
  * <pre>
  * com.blogcode
@@ -18,5 +22,9 @@ package com.blogcode;
  * </pre>
  * @since 2021.07.05
  */
+@SpringBootApplication
 public class MemberApplication {
+    public static void main(String[] args) {
+        SpringApplication.run(MemberApplication.class, args);
+    }
 }

@@ -1,4 +1,4 @@
-package com.entity;
+package com.domain;
 
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -20,7 +20,7 @@ public class Posts {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false, columnDefinition = "TEXT")
     private String content;
 
     @Column(length = 50)
@@ -46,4 +46,7 @@ public class Posts {
 
     @Enumerated(EnumType.STRING)
     private PostType dType;
+
+
+
 }

@@ -1,12 +1,10 @@
 package com.blogcode.domain;
 
-import lombok.Getter;
-import lombok.RequiredArgsConstructor;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+
+import static javax.persistence.GenerationType.IDENTITY;
 
 /**
  * <pre>
@@ -27,21 +25,25 @@ import javax.persistence.Id;
  * @since 2021.07.05
  */
 @Entity
-@Getter
-@RequiredArgsConstructor
+@Setter @Getter
+@AllArgsConstructor @NoArgsConstructor
+@Builder
 public class Member {
-    @Id
-    @GeneratedValue
+
+    @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @Column
-    private String name;
-
-    @Column
     private String email;
 
-    public Member(String name, String email) {
-        this.name = name;
-        this.email = email;
-    }
+    private String password;
+
+    private String name;
+
+    private String emailPath;
+
+    private String oauthType;
+
+    private String profileImgPath;
+
+    private String introduce;
 }
