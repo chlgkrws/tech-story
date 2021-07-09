@@ -19,11 +19,14 @@
                 <a class="nav-link dropdown-toggle" href="#" id="dropdown" data-toggle="dropdown" aria-haspopup="true"
                    aria-expanded="false">Dropdown</a>
                 <div class="dropdown-menu dropdown-menu-right shadow" aria-labelledby="dropdown">
-                    <a class="dropdown-item text-center" href="#">로그인</a>
+                    <a class="dropdown-item text-center" data-toggle="modal" data-target="#loginModal">로그인</a>
                     <a class="dropdown-item text-center" href="#">1:1 문의</a>
                     <a class="dropdown-item text-center" href="#">공지사항</a>
                 </div>
             </div>
+        </div>
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div th:replace="login/loginModal :: loginFragment"></div>
         </div>
     </div>
 </header>
