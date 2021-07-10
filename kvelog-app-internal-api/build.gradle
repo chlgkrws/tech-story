@@ -1,11 +1,21 @@
 bootJar.enabled = true
 jar.enabled = false
 
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
     implementation project(':domain-rds')
-//    implementation project(':client-core')
-    compile('org.springframework.boot:spring-boot-starter-web')
-    compileOnly 'org.projectlombok:lombok:1.18.8'
-    annotationProcessor 'org.projectlombok:lombok:1.18.8'
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+    implementation project(':client-core')
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+
+    compileOnly 'org.projectlombok:lombok'
+    annotationProcessor 'org.projectlombok:lombok'
+
+    implementation 'org.springframework.boot:spring-boot-starter-hateoas'
+
+
 }

@@ -5,6 +5,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+@RestController
 @RequestMapping(value = "/api/blog", produces = MediaTypes.HAL_JSON_VALUE)
 public class BlogRestController {
     // TODO blog 목록 조회
@@ -24,7 +25,7 @@ public class BlogRestController {
     }
 
     // TODO blog 생성
-    @PostMapping
+    @PostMapping("/{id}")
     public ResponseEntity createBlog(Posts posts){
 
 
