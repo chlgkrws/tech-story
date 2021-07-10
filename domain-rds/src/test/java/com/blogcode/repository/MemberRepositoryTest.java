@@ -1,10 +1,6 @@
 package com.blogcode.repository;
 
-import com.blogcode.test.domain.Member;
-import com.blogcode.test.respository.MemberRepository;
-import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.CoreMatchers.is;
@@ -31,16 +27,16 @@ import static org.hamcrest.MatcherAssert.assertThat;
 @DataJpaTest
 public class MemberRepositoryTest {
 
-    @Autowired
-    private MemberRepository memberRepository;
+   // @Autowired
+    //private MemberRepository memberRepository;
 
-    @Test
-    public void addMember () {
-        Member member = new Member();
-        member.setEmail("zeeno@gsitm.com");
-        member.setPassword("itm@6700");
-        memberRepository.save(member);
-        Member saved = memberRepository.findById(1L).orElse(null);
-        assertThat(saved.getEmail(), is("zeeno@gsitm.com"));
-    }
+//    @Test
+//    public void addMember () {
+//        Member member = new Member();
+//        member.setEmail("zeeno@gsitm.com");
+//        member.setPassword("itm@6700");
+//        memberRepository.save(member);
+//        Member saved = memberRepository.findById(1L).orElse(null);
+//        assertThat(saved.getEmail(), is("zeeno@gsitm.com"));
+//    }
 }

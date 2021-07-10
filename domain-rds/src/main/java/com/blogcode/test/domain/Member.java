@@ -1,16 +1,8 @@
 package com.blogcode.test.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -50,4 +42,13 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Posts> postsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Replys> replysList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Likes> likesList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<UserRole> userRolerList = new ArrayList<>();
 }

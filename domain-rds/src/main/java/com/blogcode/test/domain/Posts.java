@@ -1,20 +1,11 @@
 package com.blogcode.test.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static javax.persistence.FetchType.LAZY;
 import static javax.persistence.GenerationType.IDENTITY;
@@ -65,4 +56,13 @@ public class Posts {
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;
+
+    @OneToMany(mappedBy = "posts")
+    private List<Replys> replysList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "posts")
+    private List<HashTag> hashTags = new ArrayList<>();
+
+    @OneToMany(mappedBy = "posts")
+    private List<Likes> likesList = new ArrayList<>();
 }

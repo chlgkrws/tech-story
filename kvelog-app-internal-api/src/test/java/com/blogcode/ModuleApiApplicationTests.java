@@ -3,7 +3,7 @@ package com.blogcode;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.blogcode.domain.Member;
+import com.blogcode.test.domain.Member;
 import com.blogcode.test.service.MemberService;
 import org.junit.Test;
 import org.junit.runner.RunWith;

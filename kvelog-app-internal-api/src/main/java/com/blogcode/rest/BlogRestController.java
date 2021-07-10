@@ -1,6 +1,6 @@
-package com.blogcode.blog.rest;
+package com.blogcode.rest;
 
-import com.blogcode.domain.Posts;
+import com.blogcode.test.domain.Posts;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +25,7 @@ public class BlogRestController {
     }
 
     // TODO blog 생성
-    @PostMapping("/{id}")
+    @PostMapping
     public ResponseEntity createBlog(Posts posts){
 
 

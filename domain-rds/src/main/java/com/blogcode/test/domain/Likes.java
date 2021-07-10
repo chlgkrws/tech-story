@@ -1,7 +1,6 @@
-package com.blogcode.domain;
+package com.blogcode.test.domain;
 
 import lombok.*;
-import org.springframework.data.util.Lazy;
 
 import javax.persistence.*;
 

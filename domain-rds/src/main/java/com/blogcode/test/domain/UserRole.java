@@ -1,4 +1,4 @@
-package com.blogcode.domain;
+package com.blogcode.test.domain;
 
 import lombok.*;
 

@@ -16,8 +16,8 @@ import static org.hamcrest.Matchers.equalTo;
 @AutoConfigureMockMvc
 public class beanTest {
 
-    @Autowired
-    private MemberRepository memberRepository;
+//    @Autowired
+//    private MemberRepository memberRepository;
 
     @Autowired
     private MockMvc mockMvc;
@@ -30,7 +30,7 @@ public class beanTest {
                 .password("gkrwns")
                 .build();
 
-        Member newMember = this.memberRepository.save(member);
-        assertThat(newMember.getId(), equalTo(1));
+     //   Member newMember = this.memberRepository.save(member);
+     //   assertThat(newMember.getId(), equalTo(1));
     }
 }
