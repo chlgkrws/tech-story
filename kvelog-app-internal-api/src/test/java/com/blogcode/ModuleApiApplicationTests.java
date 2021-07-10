@@ -1,11 +1,10 @@
 package com.blogcode;
 
-import com.blogcode.domain.Member;
-import com.blogcode.service.MemberService;
-
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
+import com.blogcode.test.domain.Member;
+import com.blogcode.test.service.MemberService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,13 +33,14 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class ModuleApiApplicationTests {
-
     @Autowired
     private MemberService memberService;
 
     @Test
-    public void save() {
-        Member member = new Member("zeeno", "zeeno@gsitm.com");
+    public void addMember() {
+        Member member = new Member();
+        member.setEmail("zeeno@gsitm.com");
+        member.setPassword("itm@6700");
         Long id = memberService.signUp(member);
         assertThat(id, is(1L));
     }

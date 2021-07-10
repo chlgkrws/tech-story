@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="ko">
 <div th:fragment="loginFragment">
     <div class="modal-dialog" style="min-width: 900px">
         <div class="modal-content" style="background: transparent; border: none;">
@@ -9,5 +9,10 @@
             <iframe width="100%" height="580px" style="border: none;" src="/iframe/login.html"></iframe>
         </div>
     </div>
+    <script>
+        $('iframe').each(() => {
+            this.contentWindow.location.reload(true);
+        })
+    </script>
 </div>
 </html>

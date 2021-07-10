@@ -17,13 +17,13 @@
 // *
 // * 수정일     수정자   수정내용
 // * ---------- -------- -------------------
-// * 2021.07.07 leejinho 최초 생성
+// * 2021.07.10 leejinho 최초 생성
 // * </pre>
-// * @since 2021.07.07
+// * @since 2021.07.10
 // */
 //@SpringBootApplication
-//public class CoreApplication {
+//public class DomainRdsApplication {
 //    public static void main(String[] args) {
-//        SpringApplication.run(CoreApplication.class, args);
+//        SpringApplication.run(DomainRdsApplication.class, args);
 //    }
 //}

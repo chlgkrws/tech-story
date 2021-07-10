@@ -2,9 +2,10 @@ bootJar.enabled = true
 jar.enabled = false
 
 dependencies {
-    implementation project(':blog-domain')
-    implementation project(':member-domain')
-    implementation project(':client-core')
+    implementation project(':domain-rds')
+//    implementation project(':client-core')
     compile('org.springframework.boot:spring-boot-starter-web')
+    compileOnly 'org.projectlombok:lombok:1.18.8'
+    annotationProcessor 'org.projectlombok:lombok:1.18.8'
     testCompile('org.springframework.boot:spring-boot-starter-test')
 }
