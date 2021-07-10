@@ -1,0 +1,23 @@
+spring:
+  jpa:
+    hibernate:
+      format_sql: true
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: org.h2.Driver
+    data-username: sa
+    data-password:
+  # main:
+  #   allow-bean-definition-overriding: true
+
+logging.level:
+  org.hibernate.SQL: debug
+
