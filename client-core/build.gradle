@@ -1,12 +1,32 @@
-bootJar { enabled = false }
+bootJar { enabled = true }
 jar { enabled = true }
 
+
+repositories {
+    mavenCentral()
+}
+
 dependencies {
-    testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
-    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+    implementation('org.springframework.boot:spring-boot-starter-data-jpa')
+    implementation('org.springframework.boot:spring-boot-starter-test')
+
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
     runtimeOnly 'com.h2database:h2'
-    testCompile('org.springframework.boot:spring-boot-starter-test')
+
+
+
+    testImplementation('org.junit.jupiter:junit-jupiter-api:5.6.0')
+    testCompile('org.junit.jupiter:junit-jupiter-params:5.6.0')
+    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.6.0')
+
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
+    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.5.1")
+    testRuntimeOnly("org.junit.platform:junit-platform-commons:1.5.1")
+    test {
+        useJUnitPlatform()
+    }
+
 }
+

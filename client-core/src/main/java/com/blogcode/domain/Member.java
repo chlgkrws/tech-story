@@ -42,4 +42,13 @@ public class Member {
 
     @OneToMany(mappedBy = "member")
     private List<Posts> postsList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Replys> replysList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<Likes> likesList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member")
+    private List<UserRole> userRolerList = new ArrayList<>();
 }
