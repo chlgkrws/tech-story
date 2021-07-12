@@ -1,6 +1,6 @@
 package com.blogcode.rest;
 
-import com.blogcode.test.domain.Member;
+import com.blogcode.member.domain.Member;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

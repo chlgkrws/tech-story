@@ -1,6 +1,6 @@
-package com.blogcode.test.respository;
+package com.blogcode.member.repository;
 
-import com.blogcode.test.domain.Member;
+import com.blogcode.member.domain.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

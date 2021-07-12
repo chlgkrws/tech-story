@@ -1,5 +1,7 @@
-package com.blogcode.test.domain;
+package com.blogcode.member.domain;
 
+import com.blogcode.member.domain.Member;
+import com.blogcode.member.domain.RoleType;
 import lombok.*;
 
 import javax.persistence.*;

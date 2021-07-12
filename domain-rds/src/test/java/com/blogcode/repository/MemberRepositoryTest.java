@@ -1,8 +1,13 @@
 package com.blogcode.repository;
 
-import org.junit.runner.RunWith;
+import com.blogcode.member.domain.Member;
+import com.blogcode.member.repository.MemberRepository;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 /**
@@ -23,20 +28,31 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * </pre>
  * @since 2021.07.06
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @DataJpaTest
 public class MemberRepositoryTest {
 
-   // @Autowired
-    //private MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
-//    @Test
-//    public void addMember () {
+    @Test
+    public void addMember () {
+        String email = "zeeno@gstim.com";
+        String password = "itm@6700";
+        final Member member = Member.builder()
+                .email(email)
+                .password(password)
+                .build();
+
+        final Member saved = memberRepository.save(member);
+
+        Assert.assertEquals(email, saved.getEmail());
+
 //        Member member = new Member();
 //        member.setEmail("zeeno@gsitm.com");
 //        member.setPassword("itm@6700");
 //        memberRepository.save(member);
 //        Member saved = memberRepository.findById(1L).orElse(null);
 //        assertThat(saved.getEmail(), is("zeeno@gsitm.com"));
-//    }
+    }
 }

@@ -1,4 +1,4 @@
-package com.blogcode.test.domain;
+package com.blogcode.posts.domain;
 
 public enum PostType {
     BLOG, QNA

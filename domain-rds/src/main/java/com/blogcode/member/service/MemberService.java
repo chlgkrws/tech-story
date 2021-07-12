@@ -1,4 +1,4 @@
-package com.blogcode.test.service;
+package com.blogcode.member.service;
 
 import org.springframework.stereotype.Service;
 

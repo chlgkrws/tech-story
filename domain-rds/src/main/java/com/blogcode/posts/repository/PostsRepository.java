@@ -1,6 +1,6 @@
-package com.blogcode.test.respository;
+package com.blogcode.posts.repository;
 
-import com.blogcode.test.domain.Posts;
+import com.blogcode.posts.domain.Posts;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface PostsRepository extends JpaRepository<Posts, Long> {

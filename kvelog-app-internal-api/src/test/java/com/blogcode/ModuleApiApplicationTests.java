@@ -3,8 +3,8 @@ package com.blogcode;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-import com.blogcode.test.domain.Member;
-import com.blogcode.test.service.MemberService;
+import com.blogcode.member.domain.Member;
+import com.blogcode.member.service.MemberService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;

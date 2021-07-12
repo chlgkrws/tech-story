@@ -1,5 +1,8 @@
-package com.blogcode.test.domain;
+package com.blogcode.member.domain;
 
+import com.blogcode.posts.domain.Likes;
+import com.blogcode.posts.domain.Posts;
+import com.blogcode.posts.domain.Replys;
 import lombok.*;
 
 import javax.persistence.*;

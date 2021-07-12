@@ -1,4 +1,4 @@
-package com.blogcode.test.domain;
+package com.blogcode.posts.domain;
 
 import lombok.*;
 
@@ -11,16 +11,14 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
-public class Likes {
+public class HashTag {
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = LAZY)
-    @JoinColumn(name = "member_id")
-    private Member member;
+    @Column(length = 100, nullable = false)
+    private String keyword;
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "posts_id")
     private Posts posts;
-
 }

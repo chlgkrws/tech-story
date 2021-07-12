@@ -1,9 +1,9 @@
 package com.blogcode.rest;
 
-import com.blogcode.test.domain.Member;
-import com.blogcode.test.domain.PostType;
-import com.blogcode.test.domain.Posts;
-import com.blogcode.test.respository.PostsRepository;
+import com.blogcode.member.domain.Member;
+import com.blogcode.posts.domain.PostType;
+import com.blogcode.posts.domain.Posts;
+import com.blogcode.posts.repository.PostsRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
