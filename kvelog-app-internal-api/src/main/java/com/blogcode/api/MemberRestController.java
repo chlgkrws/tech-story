@@ -1,6 +1,8 @@
 package com.blogcode.api;
 
 import com.blogcode.member.domain.Member;
+import com.blogcode.member.service.MemberService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,11 @@ import org.springframework.web.bind.annotation.*;
  * @since 2021-07-05
  */
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/member", produces = MediaTypes.HAL_JSON_VALUE)
 public class MemberRestController {
+
+    private final MemberService memberService;
 
     // TODO 멤버 리스트 조회
     @GetMapping

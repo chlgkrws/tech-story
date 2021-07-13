@@ -67,7 +67,7 @@ public class BlogRestControllerTest {
         )
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andDo(document("/api/blog"))
+                .andDo(document("create-blog"))
         ;
 
     }

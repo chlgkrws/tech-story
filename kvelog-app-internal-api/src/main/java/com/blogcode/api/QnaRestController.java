@@ -1,13 +1,18 @@
 package com.blogcode.api;
 
 import com.blogcode.posts.domain.Posts;
+import com.blogcode.posts.service.PostsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/qna", produces = MediaTypes.HAL_JSON_VALUE)
 public class QnaRestController {
+
+    private final PostsService postsService;
 
     // TODO qna 목록 조회
     @GetMapping

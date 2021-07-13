@@ -1,13 +1,19 @@
 package com.blogcode.api;
 
 import com.blogcode.posts.domain.Posts;
+import com.blogcode.posts.service.PostsService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@RequiredArgsConstructor
 @RequestMapping(value = "/api/blog", produces = MediaTypes.HAL_JSON_VALUE)
 public class BlogRestController {
+
+    private final PostsService postsService;
+
     // TODO blog 목록 조회
     @GetMapping
     public ResponseEntity queryBlogs(Posts posts){
