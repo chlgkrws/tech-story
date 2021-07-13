@@ -15,7 +15,7 @@ public class PostsService {
     private final PostsRepository postsRepository;
 
     public Posts findByEmail(Long id){
-        Optional<Posts> posts = this.postsRepository.findByEmail(id);
+        Optional<Posts> posts = this.postsRepository.findByWriterEmail(id);
 
         return posts.orElseThrow(() -> new NoSuchElementException("Member Id: "+ id));
     }
