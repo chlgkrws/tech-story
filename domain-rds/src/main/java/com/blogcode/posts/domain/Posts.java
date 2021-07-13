@@ -1,5 +1,6 @@
 package com.blogcode.posts.domain;
 
+import com.blogcode.base.BaseEntity;
 import com.blogcode.member.domain.Member;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -15,7 +16,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
-public class Posts {
+public class Posts extends BaseEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY)
     @Column(insertable = false, updatable = false, length = 100)

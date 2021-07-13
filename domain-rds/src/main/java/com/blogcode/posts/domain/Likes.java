@@ -1,5 +1,6 @@
 package com.blogcode.posts.domain;
 
+import com.blogcode.base.BaseEntity;
 import com.blogcode.member.domain.Member;
 import lombok.*;
 
@@ -12,7 +13,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
-public class Likes {
+public class Likes extends BaseEntity {
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 

@@ -1,5 +1,6 @@
 package com.blogcode.posts.domain;
 
+import com.blogcode.base.BaseEntity;
 import lombok.*;
 
 import javax.persistence.*;
@@ -11,7 +12,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
-public class HashTag {
+public class HashTag extends BaseEntity {
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
 

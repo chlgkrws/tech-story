@@ -1,5 +1,6 @@
 package com.blogcode.member.domain;
 
+import com.blogcode.base.BaseEntity;
 import com.blogcode.posts.domain.Likes;
 import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.domain.Replys;
@@ -16,7 +17,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
-public class Member {
+public class Member extends BaseEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY)
     @Column(insertable = false, updatable = false)

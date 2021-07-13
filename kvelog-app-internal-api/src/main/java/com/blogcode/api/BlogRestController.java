@@ -1,4 +1,4 @@
-package com.blogcode.rest;
+package com.blogcode.api;
 
 import com.blogcode.posts.domain.Posts;
 import org.springframework.hateoas.MediaTypes;
