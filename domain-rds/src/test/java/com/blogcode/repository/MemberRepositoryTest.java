@@ -3,7 +3,7 @@ package com.blogcode.repository;
 import com.blogcode.member.domain.Member;
 import com.blogcode.member.repository.MemberRepository;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
@@ -39,12 +39,12 @@ public class MemberRepositoryTest {
     public void addMember () {
         String email = "zeeno@gstim.com";
         String password = "itm@6700";
-        final Member member = Member.builder()
+        Member member = Member.builder()
                 .email(email)
                 .password(password)
                 .build();
 
-        final Member saved = memberRepository.save(member);
+        Member saved = memberRepository.save(member);
 
         Assert.assertEquals(email, saved.getEmail());
 

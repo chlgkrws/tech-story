@@ -1,5 +1,7 @@
 package com.blogcode.member.service;
 
+import com.blogcode.member.domain.Member;
+import com.blogcode.member.repository.MemberRepository;
 import org.springframework.stereotype.Service;
 
 /**
@@ -23,13 +25,13 @@ import org.springframework.stereotype.Service;
 @Service
 public class MemberService {
 
-    //private final MemberRepository memberRepository;
+    private final MemberRepository memberRepository;
 
-//    public MemberService(MemberRepository memberRepository) {
-//        this.memberRepository = memberRepository;
-//    }
-//
-//    public Long signUp (Member member) {
-//        return memberRepository.save(member).getId();
-//    }
+    public MemberService(MemberRepository memberRepository) {
+        this.memberRepository = memberRepository;
+    }
+
+    public Long signUp (Member member) {
+        return memberRepository.save(member).getId();
+    }
 }

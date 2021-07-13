@@ -5,11 +5,15 @@ import static org.hamcrest.MatcherAssert.assertThat;
 
 import com.blogcode.member.domain.Member;
 import com.blogcode.member.service.MemberService;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.junit.runner.RunWith;
+import org.mockito.Mockito;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import org.springframework.test.context.web.WebAppConfiguration;
 
 
 /**
@@ -30,18 +34,18 @@ import org.springframework.test.context.junit4.SpringRunner;
  * </pre>
  * @since 2021.07.05
  */
-@RunWith(SpringRunner.class)
+@ExtendWith(SpringExtension.class)
 @SpringBootTest
 public class ModuleApiApplicationTests {
     @Autowired
     private MemberService memberService;
 
     @Test
-    public void addMember() {
+    void addMember() {
         Member member = new Member();
         member.setEmail("zeeno@gsitm.com");
         member.setPassword("itm@6700");
-        //Long id = memberService.signUp(member);
-        //assertThat(id, is(1L));
+        Long id = memberService.signUp(member);
+        assertThat(id, is(1L));
     }
 }
