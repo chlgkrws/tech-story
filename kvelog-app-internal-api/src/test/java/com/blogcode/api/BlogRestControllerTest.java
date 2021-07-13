@@ -1,6 +1,7 @@
 package com.blogcode.api;
 
 import com.blogcode.member.domain.Member;
+import com.blogcode.member.repository.MemberRepository;
 import com.blogcode.posts.domain.PostType;
 import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.repository.PostsRepository;
@@ -15,6 +16,7 @@ import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -33,8 +35,8 @@ public class BlogRestControllerTest {
     @Autowired
     private PostsRepository postsRepository;
 
-//    @Autowired
-//    private MemberRepository memberRepository;
+    @Autowired
+    private MemberRepository memberRepository;
 
     @Test
     @DisplayName("블로그 글 생성 성공")
@@ -45,6 +47,7 @@ public class BlogRestControllerTest {
                 .name("최학준")
                 .password("hi")
                 .build();
+        member = this.memberRepository.save(member);
 
         Posts posts = Posts.builder()
                 .title("블로그 글 생성")
@@ -59,11 +62,12 @@ public class BlogRestControllerTest {
         // Then
         this.mockMvc.perform(post("/api/blog")
                 .contentType(MediaType.APPLICATION_JSON)
-                .accept(MediaTypes.HAL_FORMS_JSON_VALUE)
+                .accept(MediaTypes.HAL_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(posts))
         )
                 .andDo(print())
                 .andExpect(status().isOk())
+                .andDo(document("/api/blog"))
         ;
 
     }
