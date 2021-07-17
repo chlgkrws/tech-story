@@ -19,4 +19,8 @@ public class PostsService {
 
         return posts.orElseThrow(() -> new NoSuchElementException("Member Id: "+ id));
     }
+
+    public Posts save(Posts posts){
+        return postsRepository.save(posts);
+    }
 }

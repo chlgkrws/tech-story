@@ -7,6 +7,7 @@ import com.blogcode.posts.domain.Replys;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,7 +24,7 @@ public class Member extends BaseEntity {
     @Column(insertable = false, updatable = false)
     private Long id;
 
-    @Column(length = 100, nullable = false)
+    @Column(length = 100, nullable = false, unique = true)
     private String email;
 
     @Column(length = 200, nullable = false)
