@@ -2,6 +2,7 @@ package com.blogcode;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 
 /**
  * <pre>
@@ -13,6 +14,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * @author LeeJH
  * @since 2021-06-26
  */
+@EnableJpaAuditing
 @SpringBootApplication
 public class InternalApiApplication {
     public static void main(String[] args) {

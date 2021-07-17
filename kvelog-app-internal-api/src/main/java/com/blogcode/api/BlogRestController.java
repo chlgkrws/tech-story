@@ -2,10 +2,20 @@ package com.blogcode.api;
 
 import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.service.PostsService;
+import com.blogcode.validator.PostsValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import java.net.URI;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RestController
 @RequiredArgsConstructor
@@ -14,6 +24,7 @@ public class BlogRestController {
 
     private final PostsService postsService;
 
+    private final PostsValidator postsValidator;
     // TODO blog 목록 조회
     @GetMapping
     public ResponseEntity queryBlogs(Posts posts){
@@ -32,10 +43,29 @@ public class BlogRestController {
 
     // TODO blog 생성
     @PostMapping
-    public ResponseEntity createBlog(Posts posts){
+    public ResponseEntity createBlog(@RequestBody @Valid Posts posts, Errors errors){
 
+        if(errors.hasErrors()){
+            return badRequest(errors);
+        }
 
-        return ResponseEntity.ok().build();
+        postsValidator.validate(posts, errors);
+
+        if(errors.hasErrors()){
+            return badRequest(errors);
+        }
+
+        Posts savedPost = this.postsService.save(posts);
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(BlogRestController.class).slash(savedPost.getId());
+        URI createUri = selfLinkBuilder.toUri();
+
+        EntityModel<Posts> postsResource = new EntityModel<>(posts);
+        postsResource.add(selfLinkBuilder.withSelfRel());
+        postsResource.add(linkTo(BlogRestController.class).withRel("query-blogs"));
+        postsResource.add(selfLinkBuilder.withRel("update-blog"));
+        postsResource.add(new Link("/docs/blog.html#resources-blog-create","profile"));
+
+        return ResponseEntity.created(createUri).body(postsResource);
     }
 
     // TODO blog 수정
@@ -52,5 +82,12 @@ public class BlogRestController {
 
 
         return ResponseEntity.ok().build();
+    }
+
+    // TODO index controller 추가 후 생성
+    private ResponseEntity badRequest(Errors errors){
+        EntityModel<Errors> errorsResource = new EntityModel<>(errors);
+        errorsResource.add(new Link(""));
+        return ResponseEntity.badRequest().body(errorsResource);
     }
 }
