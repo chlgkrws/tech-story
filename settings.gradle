@@ -6,4 +6,5 @@ include 'client-core'
 //include 'blog-domain'
 //include 'member-domain'
 include 'domain-rds'
+include 'oauth-app'
 
