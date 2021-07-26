@@ -49,7 +49,6 @@ public class MemberService {
             // 난수 삽입
             // 이메일
             return "이메일로 회원가입 링크를 보냈습니다.";
-
         }else{
             //expired
             if(findMember.get().getEmailPath().length() > 0){    //DB존재-사용안함

@@ -11,12 +11,6 @@ asciidoctor {
     dependsOn test
 }
 
-/*bootJar {
-    dependsOn asciidoctor
-    from ("${asciidoctor.outputDir}/html5") {
-        into 'static/docs'
-    }
-}*/
 
 task copyDocument(type: Copy) {
     dependsOn asciidoctor
@@ -40,26 +34,9 @@ dependencies {
 
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
-//    runtimeOnly 'com.h2database:h2'
 
     //rest
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.1.RELEASE'
-
-
-//    runtimeOnly('org.springframework.boot:spring-boot-devtools')
-//
-//    testImplementation('org.junit.jupiter:junit-jupiter-api:5.6.0')
-//    testCompile('org.junit.jupiter:junit-jupiter-params:5.6.0')
-//    testRuntime('org.junit.jupiter:junit-jupiter-engine:5.6.0')
-//
-//    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:5.6.0")
-//    testRuntimeOnly("org.junit.platform:junit-platform-engine:1.5.1")
-//    testRuntimeOnly("org.junit.platform:junit-platform-commons:1.5.1")
-
-//    test {
-//        useJUnitPlatform()
-//    }
-
 }
