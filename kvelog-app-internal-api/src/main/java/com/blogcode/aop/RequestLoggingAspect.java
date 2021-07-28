@@ -26,7 +26,7 @@ import java.util.stream.Stream;
 @Log4j2
 public class RequestLoggingAspect {
 
-    @Around("within(com.blogcode..*))") // ex. within(me.shinsunyoung.demo..*)) 1
+    @Around("within(com.blogcode.api..*))") // ex. within(me.shinsunyoung.demo..*)) 1
     public Object logging(ProceedingJoinPoint pjp) throws Throwable { // 2
 
         String params = getRequestParams(); // request 값 가져오기
