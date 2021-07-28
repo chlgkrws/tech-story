@@ -37,14 +37,14 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 public class BaseEntity {
     @Column(name="CREATE_ID", updatable = false)
-    private Long createId;
+    protected Long createId;
 
     @CreatedDate
     @Column(name="CREATE_DATE_TIME", updatable = false)
     private LocalDateTime createDateTime;
 
     @Column(name="MODIFY_ID")
-    private Long modifyId;
+    protected Long modifyId;
 
     @LastModifiedDate
     @Column(name="MODIFY_DATE_TIME")
