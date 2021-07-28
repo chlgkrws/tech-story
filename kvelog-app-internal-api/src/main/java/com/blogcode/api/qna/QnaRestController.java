@@ -2,6 +2,7 @@ package com.blogcode.api.qna;
 
 import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.domain.Reply;
+import com.blogcode.posts.dto.PostDTO;
 import com.blogcode.posts.service.PostsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.MediaTypes;
@@ -32,7 +33,7 @@ public class QnaRestController {
     }
     // TODO qna 생성
     @PostMapping
-    public ResponseEntity createQna(Posts posts){
+    public ResponseEntity createQna(PostDTO postDTO){
 
         return ResponseEntity.ok().build();
     }
@@ -64,7 +65,10 @@ public class QnaRestController {
     }
 
     // TODO Bad Request 
+    public ResponseEntity badRequest(HttpRequest request){
 
+        return ResponseEntity.notFound().build();
+    }
 
 
 }
