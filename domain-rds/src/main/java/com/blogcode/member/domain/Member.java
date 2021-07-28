@@ -3,11 +3,10 @@ package com.blogcode.member.domain;
 import com.blogcode.base.BaseEntity;
 import com.blogcode.posts.domain.Likes;
 import com.blogcode.posts.domain.Posts;
-import com.blogcode.posts.domain.Replys;
+import com.blogcode.posts.domain.Reply;
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -49,7 +48,7 @@ public class Member extends BaseEntity {
     private List<Posts> postsList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
-    private List<Replys> replysList = new ArrayList<>();
+    private List<Reply> replysList = new ArrayList<>();
 
     @OneToMany(mappedBy = "member")
     private List<Likes> likesList = new ArrayList<>();

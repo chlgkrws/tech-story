@@ -14,7 +14,7 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
-public class Replys extends BaseEntity {
+public class Reply extends BaseEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;

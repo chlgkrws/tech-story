@@ -60,7 +60,7 @@ public class Posts extends BaseEntity {
     private Member member;
 
     @OneToMany(mappedBy = "posts")
-    private List<Replys> replysList = new ArrayList<>();
+    private List<Reply> replysList = new ArrayList<>();
 
     @OneToMany(mappedBy = "posts")
     private List<HashTag> hashTags = new ArrayList<>();
