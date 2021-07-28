@@ -21,8 +21,7 @@ spring:
     driver-class-name: org.h2.Driver
     data-username: sa
     data-password:
-    main:
-      allow-bean-definition-overriding: true
+
 
 logging.level:
   org.hibernate.SQL: debug

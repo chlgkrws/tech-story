@@ -39,4 +39,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-hateoas'
     testImplementation 'org.springframework.restdocs:spring-restdocs-mockmvc'
     asciidoctor 'org.springframework.restdocs:spring-restdocs-asciidoctor:2.0.1.RELEASE'
+
+    implementation 'org.modelmapper:modelmapper:2.4.1'
+    implementation group: 'net.jodah', name: 'typetools', version: '0.4.2'
 }
