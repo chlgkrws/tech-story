@@ -116,9 +116,6 @@ public class BlogRestControllerTest {
                                     fieldWithPath("member.id").description("생성된 Blog의 작성자 식별자"),
                                     fieldWithPath("dtype").description("생성된 Blog의 타입(블로그/Q&A)")
                             )
-
-
-
                     ))
         ;
 

@@ -2,7 +2,7 @@ package com.blogcode.api;
 
 import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.service.PostsService;
-import com.blogcode.validator.PostsValidator;
+import com.blogcode.validator.QnaValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
@@ -24,7 +24,7 @@ public class BlogRestController {
 
     private final PostsService postsService;
 
-    private final PostsValidator postsValidator;
+    private final QnaValidator postsValidator;
     // TODO blog 목록 조회
     @GetMapping
     public ResponseEntity queryBlogs(Posts posts){
@@ -49,7 +49,7 @@ public class BlogRestController {
             return badRequest(errors);
         }
 
-        postsValidator.validate(posts, errors);
+        //postsValidator.validate(posts, errors);
 
         if(errors.hasErrors()){
             return badRequest(errors);
@@ -70,7 +70,7 @@ public class BlogRestController {
 
     // TODO blog 수정
     @PutMapping("/{id}")
-    public ResponseEntity createBlog(@PathVariable Long id){
+    public ResponseEntity modifyBlog(@PathVariable Long id){
 
 
         return ResponseEntity.ok().build();

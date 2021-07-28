@@ -49,7 +49,7 @@ public class Posts extends BaseEntity {
     private Long countScripting;
 
     @ColumnDefault("0")
-    private Byte tempSaveStatus;
+    private String tempSaveStatus;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 50)
@@ -67,4 +67,10 @@ public class Posts extends BaseEntity {
 
     @OneToMany(mappedBy = "posts")
     private List<Likes> likesList = new ArrayList<>();
+
+    @PrePersist
+    public void updateById(){
+        this.createId = member.getId();
+        this.modifyId = member.getId();
+    }
 }
