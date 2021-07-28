@@ -1,21 +1,29 @@
 package com.blogcode.api.qna;
 
-import com.blogcode.posts.domain.Posts;
-import com.blogcode.posts.domain.Reply;
-import com.blogcode.posts.dto.PostDTO;
+import com.blogcode.posts.dto.QnaDTO;
+import com.blogcode.posts.repository.QnaRepository;
 import com.blogcode.posts.service.PostsService;
+import com.blogcode.posts.service.QnaService;
+import com.blogcode.validator.QnaValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(value = "/api/qna", produces = MediaTypes.HAL_JSON_VALUE)
 public class QnaRestController {
 
-    private final PostsService postsService;
+    private final QnaService qnaService;
+
+    private final QnaRepository qnaRepository;
+
+    private final QnaValidator qnaValidator;
 
     // TODO qna 목록 조회
     @GetMapping
@@ -33,7 +41,19 @@ public class QnaRestController {
     }
     // TODO qna 생성
     @PostMapping
-    public ResponseEntity createQna(PostDTO postDTO){
+    public ResponseEntity createQna(@Valid QnaDTO qnaDTO, Errors errors){
+
+        if(errors.hasErrors()){
+            return badRequest();
+        }
+
+        qnaValidator.validate(qnaDTO, errors);
+        if(errors.hasErrors()){
+            return badRequest();
+        }
+
+
+
 
         return ResponseEntity.ok().build();
     }
@@ -65,7 +85,7 @@ public class QnaRestController {
     }
 
     // TODO Bad Request 
-    public ResponseEntity badRequest(HttpRequest request){
+    public ResponseEntity badRequest(){
 
         return ResponseEntity.notFound().build();
     }

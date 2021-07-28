@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-public class PostDTO {
+public class QnaDTO {
 
     @NotEmpty
     private String title;
@@ -21,26 +21,14 @@ public class PostDTO {
     private String content;
 
     @NotNull
-    private String writerEmail;
-
-    @NotNull
-    private String writerName;
-
-    @NotNull
-    private Long likes;
-
-    @NotNull
     private String thumbnailPath;
 
     @NotNull
-    private Long countScripting;
+    private String tempSaveStatus;
 
     @NotNull
-    private Byte tempSaveStatus;
-
-    @NotEmpty
     private PostType dType;
 
-    @NotEmpty
+    @NotNull
     private Long memberId;
 }

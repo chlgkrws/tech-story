@@ -2,16 +2,17 @@ package com.blogcode.validator;
 
 import com.blogcode.posts.domain.PostType;
 import com.blogcode.posts.domain.Posts;
+import com.blogcode.posts.dto.QnaDTO;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 
 @Component
-public class PostsValidator {
-    public void validate(Posts post, Errors errors) {
+public class QnaValidator {
+    public void validate(QnaDTO qnaDTO, Errors errors) {
         boolean isValidDType = false;
 
         for(PostType type : PostType.values()){
-            if(post.getDType().equals(type)){
+            if(qnaDTO.getDType().equals(type)){
                 isValidDType = true;
             }
         }
@@ -19,6 +20,5 @@ public class PostsValidator {
         if(!isValidDType){
             errors.reject("wrongDType","dType is wrong");
         }
-
     }
 }
