@@ -2,6 +2,7 @@ package com.blogcode.posts.domain;
 
 import com.blogcode.base.BaseEntity;
 import com.blogcode.member.domain.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -57,6 +58,7 @@ public class Posts extends BaseEntity {
 
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
+    @JsonIgnore
     private Member member;
 
     @OneToMany(mappedBy = "posts")

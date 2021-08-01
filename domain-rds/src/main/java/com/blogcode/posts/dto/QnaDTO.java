@@ -20,7 +20,6 @@ public class QnaDTO {
     @NotNull
     private String content;
 
-    @NotNull
     private String thumbnailPath;
 
     @NotNull
