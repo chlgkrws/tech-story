@@ -33,7 +33,7 @@ public class OAuthTokenTest {
     @DisplayName("토큰 발급 받기")
     public void getToken() throws Exception {
         // Given
-        String username = "cgw981@naver.com31";
+        String username = "cg32421421432w981@naver.com31";
         String password = "pass";
         Member hakjun  = Member.builder()
                 .email(username)

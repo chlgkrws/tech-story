@@ -30,5 +30,6 @@ public class QnaTest {
                 .build();
 
         Assertions.assertThat(qnaDTO).isNotNull();
+        Assertions.assertThat(qnaDTO.getContent()).isEqualTo("테스트");
     }
 }

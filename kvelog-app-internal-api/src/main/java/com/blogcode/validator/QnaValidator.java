@@ -10,6 +10,7 @@ import org.springframework.validation.Errors;
 public class QnaValidator {
     public void validate(QnaDTO qnaDTO, Errors errors) {
         boolean isValidDType = false;
+        boolean isValidMemberId = false;
 
         for(PostType type : PostType.values()){
             if(qnaDTO.getDType().equals(type)){
@@ -20,5 +21,6 @@ public class QnaValidator {
         if(!isValidDType){
             errors.reject("wrongDType","dType is wrong");
         }
+
     }
 }

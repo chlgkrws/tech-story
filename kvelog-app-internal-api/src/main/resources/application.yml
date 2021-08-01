@@ -8,7 +8,7 @@ spring:
   jpa:
     hibernate:
       format_sql: true
-      ddl-auto: create-drop
+      ddl-auto: create
     database-platform: org.hibernate.dialect.H2Dialect
     properties:
       hibernate:
@@ -19,10 +19,13 @@ spring:
   datasource:
     url: jdbc:h2:tcp://localhost/~/test
     driver-class-name: org.h2.Driver
-    data-username: sa
-    data-password:
+    username: sa
+    password:
+
 
 
 logging.level:
   org.hibernate.SQL: debug
 
+msg:
+  front-url: localhost:8080

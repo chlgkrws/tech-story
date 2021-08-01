@@ -30,6 +30,9 @@ public class Posts extends BaseEntity {
     private String content;
 
     @Column(length = 50)
+    private Long writerId;
+
+    @Column(length = 50)
     private String writerEmail;
 
     @Column(length = 50)
@@ -74,5 +77,12 @@ public class Posts extends BaseEntity {
     public void updateById(){
         this.createId = member.getId();
         this.modifyId = member.getId();
+    }
+
+    public void setMember(Member member) {
+        this.member = member;
+        this.writerId = member.getId();
+        this.writerEmail = member.getEmail();
+        this.writerName = member.getName();
     }
 }

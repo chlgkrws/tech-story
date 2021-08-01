@@ -1,18 +1,33 @@
 package com.blogcode.api.qna;
 
+import com.blogcode.api.BlogRestController;
+import com.blogcode.member.domain.Member;
+import com.blogcode.member.repository.MemberRepository;
+import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.dto.QnaDTO;
 import com.blogcode.posts.repository.QnaRepository;
 import com.blogcode.posts.service.PostsService;
 import com.blogcode.posts.service.QnaService;
 import com.blogcode.validator.QnaValidator;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+
+import java.net.URI;
+import java.util.NoSuchElementException;
+
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
+import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
@@ -25,10 +40,17 @@ public class QnaRestController {
 
     private final QnaValidator qnaValidator;
 
+    private final ModelMapper modelMapper;
+
+    private final MemberRepository memberRepository;
+
+    @Value("${msg.front-url}")
+    private String frontURI;
+
     // TODO qna 목록 조회
     @GetMapping
     public ResponseEntity queryQna(){
-
+        System.out.println("frontURI = " + frontURI);
         return ResponseEntity.ok().build();
     }
     // TODO qna 조회
@@ -41,21 +63,34 @@ public class QnaRestController {
     }
     // TODO qna 생성
     @PostMapping
-    public ResponseEntity createQna(@Valid QnaDTO qnaDTO, Errors errors){
+    public ResponseEntity createQna(@RequestBody @Valid QnaDTO qnaDTO, Errors errors){
 
         if(errors.hasErrors()){
-            return badRequest();
+            return badRequest(errors);
         }
 
         qnaValidator.validate(qnaDTO, errors);
         if(errors.hasErrors()){
-            return badRequest();
+            return badRequest(errors);
         }
 
+        Posts qna = this.modelMapper.map(qnaDTO, Posts.class);
+        Posts posts = this.qnaRepository.save(qna);
 
+        Member member = this.memberRepository.findById(qnaDTO.getMemberId()).orElseThrow(()-> new NoSuchElementException());
+        posts.setMember(member);
 
+        Long id = posts.getId();
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(QnaRestController.class);
+        URI createUri = selfLinkBuilder.slash(id).toUri();
 
-        return ResponseEntity.ok().build();
+        EntityModel<Posts> resQna = EntityModel.of(posts);
+        resQna.add(selfLinkBuilder.slash(id).withSelfRel());
+        resQna.add(selfLinkBuilder.withRel("query-qna"));
+        resQna.add(linkTo(methodOn(QnaRestController.class).updateQna(id)).withRel("update-qna"));
+        resQna.add(Link.of("/docs/blog.html#resources-qna-create").withRel("profile"));
+
+        return ResponseEntity.created(createUri).body(resQna);
     }
 
     // TODO qna 수정
@@ -85,9 +120,11 @@ public class QnaRestController {
     }
 
     // TODO Bad Request 
-    public ResponseEntity badRequest(){
+    public ResponseEntity badRequest(Errors errors){
 
-        return ResponseEntity.notFound().build();
+        EntityModel<Errors> resErrors = EntityModel.of(errors);
+        resErrors.add(Link.of(frontURI).withRel("index"));
+        return ResponseEntity.badRequest().body(resErrors);
     }
 
 

@@ -15,7 +15,6 @@ import org.springframework.boot.autoconfigure.domain.EntityScan;
  * @since 2021-06-26
  */
 @SpringBootApplication
-
 public class FrontApplication {
     public static void main(String[] args) {
         SpringApplication.run(FrontApplication.class, args);
