@@ -41,7 +41,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 
-@SpringBootTest
+@SpringBootTest(classes = InternalApiApplication.class)
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
@@ -75,6 +75,7 @@ class QnaRestControllerTest {
                 .tempSaveStatus("N")
                 .dType(PostType.QNA)
                 .memberId(member.getId())
+                .hashTag(List.of("박요한","최학준"))
                 .build();
 
         this.mockMvc.perform(post("/api/qna")
@@ -103,8 +104,8 @@ class QnaRestControllerTest {
                                 fieldWithPath("tempSaveStatus").description("생성할 qna의 임시저장 여부"),
                                 fieldWithPath("memberId").description("생성할 qna 작성자 Id"),
                                 fieldWithPath("dtype").description("생성할 qna의 타입(블로그/Q&A)"),
-                                fieldWithPath("thumbnailPath").description("생성할 qna의 썸네일 경로(옵션)")
-                                
+                                fieldWithPath("thumbnailPath").description("생성할 qna의 썸네일 경로(옵션)"),
+                                fieldWithPath("hashTag").description("생성할 qna의 해시태그들 (옵션/List)")
                         ),
                         responseHeaders(
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json"),

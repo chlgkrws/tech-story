@@ -7,6 +7,8 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 
 @Setter @Getter
 @NoArgsConstructor
@@ -30,4 +32,6 @@ public class QnaDTO {
 
     @NotNull
     private Long memberId;
+
+    private List<String> hashTag = new ArrayList<>();
 }

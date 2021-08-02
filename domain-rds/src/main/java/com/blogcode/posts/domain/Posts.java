@@ -79,7 +79,7 @@ public class Posts extends BaseEntity {
         this.modifyId = member.getId();
     }
 
-    public void setMember(Member member) {
+    public void setMemberData(Member member) {
         this.member = member;
         this.writerId = member.getId();
         this.writerEmail = member.getEmail();
