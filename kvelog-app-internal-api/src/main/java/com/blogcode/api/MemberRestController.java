@@ -39,9 +39,6 @@ public class MemberRestController {
     // TODO 멤버 생성
     @PostMapping
     public ResponseEntity createMember(@RequestBody Member member){
-
-        String registerMsg = memberService.register(member.getEmail(), member.getPassword());
-
         return ResponseEntity.ok().build();
     }
     // TODO 멤버 수정
@@ -56,6 +53,4 @@ public class MemberRestController {
 
         return ResponseEntity.ok().build();
     }
-
-
 }
