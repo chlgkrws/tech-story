@@ -80,6 +80,9 @@ class QnaRestControllerTest {
 
         this.mockMvc.perform(post("/api/qna")
                 .contentType(MediaType.APPLICATION_JSON)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host","localhost")
+                .header("X-Forwarded-Port", "8084")
                 .accept(MediaTypes.HAL_JSON_VALUE)
                 .content(objectMapper.writeValueAsString(qnaDTO))
         )
@@ -133,7 +136,7 @@ class QnaRestControllerTest {
                                 fieldWithPath("modifyDateTime").description("qna를 마지막으로 수정한 시간")
                         )
                 ))
-                ;
+        ;
     }
 
     @Test

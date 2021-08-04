@@ -660,20 +660,20 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
-Location: http://localhost:8080/api/qna/1
+Location: http://localhost:8084/api/qna/1
 Content-Type: application/hal+json;charset=UTF-8
 Content-Length: 839
 
 {
   "createId" : 1,
-  "createDateTime" : "2021-08-01T22:35:33.0031106",
+  "createDateTime" : "2021-08-04T20:59:37.1883448",
   "modifyId" : 1,
-  "modifyDateTime" : "2021-08-01T22:35:33.0031106",
+  "modifyDateTime" : "2021-08-04T20:59:37.2293425",
   "id" : 1,
   "title" : "테스트 글",
   "content" : "테스트",
   "writerId" : 1,
-  "writerEmail" : "zee122@gstim.com",
+  "writerEmail" : "zee120@gstim.com",
   "writerName" : null,
   "views" : null,
   "likes" : null,
@@ -686,13 +686,13 @@ Content-Length: 839
   "dtype" : "QNA",
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/api/qna/1"
+      "href" : "http://localhost:8084/api/qna/1"
     },
     "query-qna" : {
-      "href" : "http://localhost:8080/api/qna"
+      "href" : "http://localhost:8084/api/qna"
     },
     "update-qna" : {
-      "href" : "http://localhost:8080/api/qna/1"
+      "href" : "http://localhost:8084/api/qna/1"
     },
     "profile" : {
       "href" : "/docs/blog.html#resources-qna-create"
@@ -779,6 +779,11 @@ Content-Length: 839
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>String</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">생성할 qna의 썸네일 경로(옵션)</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>hashTag</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>Array</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">생성할 qna의 해시태그들 (옵션/List)</p></td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -788,8 +793,11 @@ Content-Length: 839
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">POST /api/qna HTTP/1.1
 Content-Type: application/json;charset=UTF-8
+X-Forwarded-Proto: http
+X-Forwarded-Host: localhost
+X-Forwarded-Port: 8084
 Accept: application/hal+json
-Content-Length: 153
+Content-Length: 198
 Host: localhost:8080
 
 {
@@ -798,6 +806,7 @@ Host: localhost:8080
   "thumbnailPath" : "/",
   "tempSaveStatus" : "N",
   "memberId" : 1,
+  "hashTag" : [ "박요한", "최학준" ],
   "dtype" : "QNA"
 }</code></pre>
 </div>
@@ -942,20 +951,20 @@ Host: localhost:8080
 <div class="listingblock">
 <div class="content">
 <pre class="highlightjs highlight nowrap"><code class="language-http" data-lang="http">HTTP/1.1 201 Created
-Location: http://localhost:8080/api/qna/1
+Location: http://localhost:8084/api/qna/1
 Content-Type: application/hal+json;charset=UTF-8
 Content-Length: 839
 
 {
   "createId" : 1,
-  "createDateTime" : "2021-08-01T22:35:33.0031106",
+  "createDateTime" : "2021-08-04T20:59:37.1883448",
   "modifyId" : 1,
-  "modifyDateTime" : "2021-08-01T22:35:33.0031106",
+  "modifyDateTime" : "2021-08-04T20:59:37.2293425",
   "id" : 1,
   "title" : "테스트 글",
   "content" : "테스트",
   "writerId" : 1,
-  "writerEmail" : "zee122@gstim.com",
+  "writerEmail" : "zee120@gstim.com",
   "writerName" : null,
   "views" : null,
   "likes" : null,
@@ -968,13 +977,13 @@ Content-Length: 839
   "dtype" : "QNA",
   "_links" : {
     "self" : {
-      "href" : "http://localhost:8080/api/qna/1"
+      "href" : "http://localhost:8084/api/qna/1"
     },
     "query-qna" : {
-      "href" : "http://localhost:8080/api/qna"
+      "href" : "http://localhost:8084/api/qna"
     },
     "update-qna" : {
-      "href" : "http://localhost:8080/api/qna/1"
+      "href" : "http://localhost:8084/api/qna/1"
     },
     "profile" : {
       "href" : "/docs/blog.html#resources-qna-create"

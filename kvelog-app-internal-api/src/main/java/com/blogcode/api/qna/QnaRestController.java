@@ -1,24 +1,19 @@
 package com.blogcode.api.qna;
 
-import com.blogcode.api.BlogRestController;
 import com.blogcode.member.domain.Member;
 import com.blogcode.member.repository.MemberRepository;
-import com.blogcode.posts.domain.HashTag;
 import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.dto.QnaDTO;
 import com.blogcode.posts.repository.HashTagRepository;
 import com.blogcode.posts.repository.QnaRepository;
-import com.blogcode.posts.service.PostsService;
 import com.blogcode.posts.service.QnaService;
 import com.blogcode.validator.QnaValidator;
-import com.blogcode.web.QnaController;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
-import org.springframework.hateoas.UriTemplate;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.HttpRequest;
 import org.springframework.http.ResponseEntity;
@@ -26,13 +21,10 @@ import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-
 import java.net.URI;
-import java.util.List;
 import java.util.NoSuchElementException;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RestController
 @RequiredArgsConstructor
@@ -90,14 +82,14 @@ public class QnaRestController {
 
         this.hashTagRepository.saveAll(posts.getHashTags());
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(QnaController.class);
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(QnaRestController.class);
         URI createUri = selfLinkBuilder.slash(id).toUri();
 
         EntityModel<Posts> resQna = EntityModel.of(posts);
         resQna.add(selfLinkBuilder.slash(id).withSelfRel());
         resQna.add(selfLinkBuilder.withRel("query-qna"));
         resQna.add(selfLinkBuilder.slash(id).withRel("update-qna"));
-        resQna.add(Link.of("/docs/blog.html#resources-qna-create").withRel("profile"));
+        resQna.add(Link.of("/docs/qna.html#resources-qna-create").withRel("profile"));
 
         return ResponseEntity.created(createUri).body(resQna);
     }

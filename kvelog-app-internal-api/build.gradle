@@ -27,7 +27,6 @@ build {
 dependencies {
     implementation project(':domain-rds')
     implementation project(':client-core')
-    implementation project(':kvelog-app-front')
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
