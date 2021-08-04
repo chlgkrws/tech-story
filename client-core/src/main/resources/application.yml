@@ -17,6 +17,14 @@ spring:
     data-password:
   # main:
   #   allow-bean-definition-overriding: true
+      mail:
+        host: smtp.gmail.com
+        port: 587
+          username: email@gmail.com
+        password: password
+        properties:
+          mail.smtp.auth: true
+          mail.smtp.starttls.enable: true
 
 logging.level:
   org.hibernate.SQL: debug

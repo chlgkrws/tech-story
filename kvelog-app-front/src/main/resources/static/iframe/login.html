@@ -475,10 +475,8 @@
             </div>
             <p class="small">or use your email for registration:</p>
             <form id="sign-up-form">
-                <input type="text" placeholder="Name" />
-                <input type="email" placeholder="Email" />
-                <input type="password" placeholder="Password" />
-                <button class="control-button up">Sign Up</button>
+                <input type="email" id= "receiveEmail" placeholder="Email" />
+                <button class="control-button up" id="signInBtn">Sign Up</button>
             </form>
         </div>
     </div>
@@ -498,6 +496,8 @@
     // The forms
     var accountForm = document.getElementById("sign-in-info")
     var signinForm = document.getElementById("sign-up-info");
+
+    var sendEmailButton = document.getElementById("signInBtn");
 
     // Open the Sign Up page
     openSignUp = () => {
@@ -547,8 +547,27 @@
         }, 200);
     }
 
+
+    sendEmail = () => {
+        var address = document.getElementById("receiveEmail");
+        var xhr = new XMLHttpRequest();
+        var data = JSON.stringify({id: address})
+
+        xhr.open('GET', '127.0.0.1:8084/email', false);
+        xhr.setRequestHeader('Content-Type', 'application/json');
+        xhr.send(data);
+        xhr.onload = () => {
+            if(xhr.status == 200) {
+                console.log("메일 전송 완료");
+            } else {
+                console.log("메일 전송 실패");
+            }
+        }
+    }
+
     // When a 'switch' button is pressed, switch page
     openSignUpButton.addEventListener("click", openSignUp, false);
     openSignInButton.addEventListener("click", openSignIn, false);
+    sendEmailButton.addEventListener("click", sendEmail, false);
 </script>
 </html>
