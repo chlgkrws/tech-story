@@ -1,12 +1,12 @@
 package com.blogcode.api;
 
+import com.blogcode.posts.dto.NoticeDTO;
 import lombok.RequiredArgsConstructor;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
@@ -39,8 +39,16 @@ public class NoticeRestController {
         return ResponseEntity.ok().build();
     }
 
+    @PostMapping
+    public ResponseEntity createNotice(@RequestBody @Valid NoticeDTO noticeDto, Error error){
 
+        return ResponseEntity.ok().build();
+    }
 
-
+//    @PostMapping
+//    public ResponseBody tempoNotice(@RequestBody @Valid NoticeDTO noticeDTO, Error error){
+//
+//        return ResponseEntity.ok().build();
+//    }
 
 }
