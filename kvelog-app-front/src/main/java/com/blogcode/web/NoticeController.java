@@ -17,14 +17,14 @@ public class NoticeController {
     }
 
     //검색
-    @GetMapping("/search/{search}")
-    public ModelAndView searchNotice(ModelAndView modelAndView, @PathVariable String search){
+    @GetMapping("/noticeSearch/{noticeSearch}")
+    public ModelAndView searchNotice(ModelAndView modelAndView, @PathVariable String noticeSearch){
         return modelAndView;
     }
 
     //세부내용 조회
-    @GetMapping("/{id}")
-    public ModelAndView getNotice(ModelAndView modelAndView, @PathVariable Integer id){
+    @GetMapping("/{noticeId}")
+    public ModelAndView getNotice(ModelAndView modelAndView, @PathVariable Integer noticeId){
         return modelAndView;
     }
 

@@ -27,14 +27,14 @@ public class NoticeRestController {
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/search/{search}")
-    public ResponseEntity searchNotice(@PathVariable String search){
+    @GetMapping("/noticeSearch/{noticeSearch}")
+    public ResponseEntity searchNotice(@PathVariable String noticeSearch){
 
         return ResponseEntity.ok().build();
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity getNotice(@PathVariable Integer id){
+    @GetMapping("/{noticeId}")
+    public ResponseEntity getNotice(@PathVariable Integer noticeId){
 
         return ResponseEntity.ok().build();
     }
