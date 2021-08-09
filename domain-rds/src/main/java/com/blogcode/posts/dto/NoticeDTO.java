@@ -1,14 +1,12 @@
 package com.blogcode.posts.dto;
 
 import com.blogcode.posts.domain.Posts;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
+@AllArgsConstructor
 @Builder
 @Getter
 @Setter

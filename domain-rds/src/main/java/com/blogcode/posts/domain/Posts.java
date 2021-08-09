@@ -74,9 +74,14 @@ public class Posts extends BaseEntity {
     private List<Likes> likesList = new ArrayList<>();
 
     @PrePersist
-    public void updateById(){
+    public void update(){
         this.createId = member.getId();
         this.modifyId = member.getId();
+
+        if(this.id == null){
+            this.likes = 0L;
+            this.views = 0L;
+        }
     }
 
     public void setMemberData(Member member) {

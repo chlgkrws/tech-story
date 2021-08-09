@@ -50,4 +50,6 @@ public class BaseEntity {
     @Column(name="MODIFY_DATE_TIME")
     private LocalDateTime modifyDateTime;
 
+    @Column
+    private Integer useYn;
 }
