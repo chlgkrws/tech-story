@@ -9,9 +9,8 @@ import com.blogcode.posts.dto.QnaDTO;
 import com.blogcode.posts.repository.QnaRepository;
 import com.blogcode.posts.service.QnaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.junit.jupiter.api.Disabled;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.restdocs.AutoConfigureRestDocs;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -20,7 +19,13 @@ import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.restdocs.JUnitRestDocumentation;
+import org.springframework.restdocs.RestDocumentationContextProvider;
+import org.springframework.restdocs.RestDocumentationExtension;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
 import java.util.Random;
@@ -29,6 +34,8 @@ import static org.springframework.restdocs.headers.HeaderDocumentation.*;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
 import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
+import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
@@ -40,10 +47,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest(classes = InternalApiApplication.class)
+//@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
 class QnaRestControllerTest {
+
+    @Autowired
+    WebApplicationContext context;
 
     @Autowired
     MockMvc mockMvc;
@@ -59,6 +70,18 @@ class QnaRestControllerTest {
 
     @Autowired
     MemberRepository memberRepository;
+
+ /*   @BeforeEach
+    public void setUp(RestDocumentationContextProvider restDocumentation) {
+        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
+                .apply(documentationConfiguration(restDocumentation).uris()
+                        .withScheme("http")
+                        .withHost("localhost")
+                        .withPort(8084))
+                .alwaysDo(document("{method-name}",
+                        preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
+                .build();
+    }*/
 
     @Test
     @DisplayName("Qna 생성")
@@ -183,8 +206,10 @@ class QnaRestControllerTest {
     @Test
     @DisplayName("Qna 목록 조회 - 조건 X")
     public void getQnaList() throws Exception {
+        String postsList = "_embedded.postsList";
+
         this.mockMvc.perform(get("/api/qna")
-                .param("page", "0")
+                .param("page", "1")
                 .param("size","6")
                 .param("sort","createDateTime,DESC")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -205,7 +230,12 @@ class QnaRestControllerTest {
                                 linkWithRel("recent").description("최신 순으로 qna 조회"),
                                 linkWithRel("search").description("검색 키워드로 qna 조회"),
                                 linkWithRel("blog").description("blog 목록 조회"),
-                                linkWithRel("profile").description("해당 Rest API profile 이동")
+                                linkWithRel("profile").description("해당 Rest API profile 이동"),
+                                linkWithRel("first").description("생성된 qna 중 가장 첫 번째 페이지"),
+                                linkWithRel("last").description("생성된 qna 중 가장 마지막 페이지"),
+                                linkWithRel("prev").description("이전 qna 리스트 조회"),
+                                linkWithRel("next").description("다음 qna 리스트 조회")
+
                         ),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("accept 헤더"),
@@ -220,7 +250,18 @@ class QnaRestControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json")
                         ),
                         relaxedResponseFields(
-
+                                fieldWithPath(postsList).description("조회한 qna 리스트"),
+                                fieldWithPath(postsList+"[0].createId").description("qna를 생성한 멤버 식별자"),
+                                fieldWithPath(postsList+"[0].createDateTime").description("qna 생성 시간"),
+                                fieldWithPath(postsList+"[0].id").description("조회한 qna 식별자"),
+                                fieldWithPath(postsList+"[0].title").description("조회한 qna 제목"),
+                                fieldWithPath(postsList+"[0].content").description("조회한 qna 내용"),
+                                fieldWithPath(postsList+"[0].writerName").description("조회한 qna 작성자 닉네임"),
+                                fieldWithPath(postsList+"[0].writerEmail").description("조회한 qna 작성자 이메일"),
+                                fieldWithPath(postsList+"[0].views").description("조회한 qna 조회수"),
+                                fieldWithPath(postsList+"[0].likes").description("조회한 qna 좋아요 수"),
+                                fieldWithPath(postsList+"[0].thumbnailPath").description("조회한 qna 섬네일 링크"),
+                                fieldWithPath(postsList+"[0].countScripting").description("조회한 qna이 스크립된 개수")
                         )
 
                 ));
@@ -244,7 +285,7 @@ class QnaRestControllerTest {
 
 
     public Member getRandomMember(){
-        Integer ints = new Random().nextInt(6);
+        Integer ints = new Random().nextInt(100);
         String email = "zee12"+ ints +"@gstim.com";
         String password = "itm@6700";
 

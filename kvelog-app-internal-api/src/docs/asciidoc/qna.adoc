@@ -107,7 +107,7 @@ Blog 리소스는 Question를 만들거나 조회할 때 사용한다.
 
 `GET` 요청을 사용하여 서비스의 모든 Question을 조회할 수 있다.
 
-operation::create-qna[snippets='http-response']
+operation::get-qna-list[snippets='request-headers,request-fields,http-request,response-headers,response-fields,http-response,links']
 
 [[resources-qna-create]]
 === Question(qna) 생성

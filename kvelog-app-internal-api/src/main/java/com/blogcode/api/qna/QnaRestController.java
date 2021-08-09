@@ -10,6 +10,7 @@ import com.blogcode.posts.repository.QnaRepository;
 import com.blogcode.posts.service.QnaService;
 import com.blogcode.validator.QnaValidator;
 import lombok.RequiredArgsConstructor;
+import org.aspectj.lang.annotation.Before;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -52,6 +53,7 @@ public class QnaRestController {
     @Value("${msg.front-url}")
     private String frontURI;
 
+
     // TODO qna 목록 조회
     @GetMapping
     public ResponseEntity queryQna(@RequestParam(required = false) String interval,
@@ -59,42 +61,22 @@ public class QnaRestController {
                                    PagedResourcesAssembler<Posts> assembler,
                                    Pageable pageable){
         // TODO 서비스 하나 만들어서 조건에 따른 qna 리스트 목록 조회하기(trend,recent,search등등
-        String itv = "?interval=";
 
-        Page<Posts> page = this.qnaRepository.findAll(pageable);
+        Page<Posts> page = this.qnaService.findByPostList(interval, search, pageable);
         var resQna = assembler.toModel(page);
 
         WebMvcLinkBuilder selfLinkBuilder = linkTo(QnaRestController.class);
-        WebMvcLinkBuilder self = selfLinkBuilder;
-        WebMvcLinkBuilder trend = selfLinkBuilder;
-        WebMvcLinkBuilder trendWeek = selfLinkBuilder.slash("?interval=day");
-        WebMvcLinkBuilder trendMonth = selfLinkBuilder.slash("?interval=week");
-        WebMvcLinkBuilder trendYear = selfLinkBuilder.slash("?interval=year");
-        WebMvcLinkBuilder recent = selfLinkBuilder.slash("?interval=recent");
-        WebMvcLinkBuilder searchLink = selfLinkBuilder.slash("?search={keyword}");
-        WebMvcLinkBuilder blogLink = linkTo(BlogRestController.class);
-        Link profile = Link.of("/docs/qna.html#resources-get-qna-list");
 
-
-        resQna.add(linkTo(QnaRestController.class).slash("?interval=day").withRel("trend"));
-        resQna.add(linkTo(QnaRestController.class).slash("?interval=week").withRel("trend-week"));
-        resQna.add(linkTo(QnaRestController.class).slash("?interval=month").withRel("trend-month"));
-        resQna.add(linkTo(QnaRestController.class).slash("?interval=year").withRel("trend-year"));
-        resQna.add(linkTo(QnaRestController.class).slash("?interval=recent").withRel("recent"));
-        resQna.add(linkTo(QnaRestController.class).slash("?search={keyword}").withRel("search"));
+        resQna.add(selfLinkBuilder.slash("?interval=day").withRel("trend"));
+        resQna.add(selfLinkBuilder.slash("?interval=week").withRel("trend-week"));
+        resQna.add(selfLinkBuilder.slash("?interval=month").withRel("trend-month"));
+        resQna.add(selfLinkBuilder.slash("?interval=year").withRel("trend-year"));
+        resQna.add(selfLinkBuilder.slash("?interval=recent").withRel("recent"));
+        resQna.add(selfLinkBuilder.slash("?search={keyword}").withRel("search"));
         resQna.add(linkTo(BlogRestController.class).withRel("blog"));
         resQna.add(Link.of("/docs/qna.html#resources-get-qna-list").withRel("profile"));
 
         return ResponseEntity.ok(resQna);
-//        linkWithRel("self").description("생성된 qna 조회"),
-//                linkWithRel("trend").description("하루 중 가장 인기있는 순으로 qna 조회"),
-//                linkWithRel("trend-week").description("일주일 중 가장 인기있는 순으로 qna 조회"),
-//                linkWithRel("trend-month").description("한달 중 가장 인기있는 순으로 qna 조회"),
-//                linkWithRel("trend-year").description("일년 중 가장 인기있는 순으로 qna 조회"),
-//                linkWithRel("recent").description("최신 순으로 qna 조회"),
-//                linkWithRel("search").description("검색 키워드로 qna 조회"),
-//                linkWithRel("blog").description("blog 목록 조회"),
-//                linkWithRel("profile").description("해당 Rest API profile 이동")
     }
 
 
