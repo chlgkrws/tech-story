@@ -5,31 +5,19 @@ import com.blogcode.posts.repository.QnaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+@RequiredArgsConstructor
 @Service
 @Transactional
-@RequiredArgsConstructor
-public class QnaService {
+public class QnaIntervalService {
 
     private final QnaRepository qnaRepository;
 
-    private final QnaIntervalService qnaIntervalService;
-
-    public Page<Posts> findByPostList(String interval, String search, Pageable pageable) {
-
-        if(interval == null && search != null){
-            return findByPostList(search, pageable);
-        }
-
-        return this.qnaIntervalService.findByPostList(interval, pageable);
-    }
-
-    // TODO with search
-    public Page<Posts> findByPostList(String search, Pageable pageable) {
+    public Page<Posts> findByPostList(String interval, Pageable pageable) {
 
         return this.qnaRepository.findAll(pageable);
     }
-
 }
