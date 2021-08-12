@@ -2,6 +2,7 @@ package com.blogcode.repository;
 
 import com.blogcode.member.domain.Member;
 import com.blogcode.member.repository.MemberRepository;
+import org.assertj.core.api.Assertions;
 import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -46,7 +47,7 @@ public class MemberRepositoryTest {
 
         Member saved = memberRepository.save(member);
 
-        Assert.assertEquals(email, saved.getEmail());
+        Assertions.assertThat(email).isEqualTo(saved.getEmail());
 
 //        Member member = new Member();
 //        member.setEmail("zeeno@gsitm.com");
