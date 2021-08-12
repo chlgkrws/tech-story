@@ -1,10 +1,13 @@
 package com.blogcode.posts.service;
 
+import com.blogcode.mapper.BlogMapper;
 import com.blogcode.posts.domain.Posts;
+import com.blogcode.posts.dto.BlogDto;
 import com.blogcode.posts.repository.PostsRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 
@@ -13,6 +16,7 @@ import java.util.Optional;
 public class PostsService {
 
     private final PostsRepository postsRepository;
+    private final BlogMapper blogMapper;
 
     public Posts findByEmail(Long id){
         Optional<Posts> posts = this.postsRepository.findByWriterEmail(id);
@@ -20,7 +24,25 @@ public class PostsService {
         return posts.orElseThrow(() -> new NoSuchElementException("Member Id: "+ id));
     }
 
-    public Posts save(Posts posts){
-        return postsRepository.save(posts);
+//    public Posts save(Posts posts){
+//        return postsRepository.save(posts);
+//    }
+
+    public BlogDto saveByDto(BlogDto blogDto){
+        Posts savedPosts = postsRepository.save(blogMapper.toEntity(blogDto));
+        return blogMapper.toDto(Optional.of(savedPosts));
+    }
+
+    public List<BlogDto> findAllBlog() {
+        return blogMapper.toDtoList(postsRepository.findAll());
+    }
+
+    public BlogDto findBlogById(Long id) {
+        return blogMapper.toDto(postsRepository.findById(id));
+    }
+
+    public Long deleteBoard(Long id) {
+        postsRepository.deleteById(id);
+        return id;
     }
 }

@@ -1,6 +1,6 @@
 package com.blogcode.api.qna;
 
-import com.blogcode.api.BlogRestController;
+import com.blogcode.api.blog.BlogRestController;
 import com.blogcode.member.domain.Member;
 import com.blogcode.member.repository.MemberRepository;
 import com.blogcode.posts.domain.Posts;
