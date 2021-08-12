@@ -84,10 +84,19 @@ public class QnaRestController {
     @GetMapping("/{id}")
     public ResponseEntity getQna(@PathVariable Long id){
 
+        Posts posts = this.qnaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+
 
         // TODO qna 조회수
 
-        return ResponseEntity.ok().build();
+        WebMvcLinkBuilder selfLinkBuilder = linkTo(QnaRestController.class);
+        EntityModel<Posts> resQna = EntityModel.of(posts);
+        Long postId = posts.getId();
+
+        resQna.add(selfLinkBuilder.slash(postId).withSelfRel());
+        resQna.add(selfLinkBuilder.slash(postId).withRel("update"));
+
+        return ResponseEntity.ok(resQna);
     }
     // TODO qna 생성
     @PostMapping

@@ -31,8 +31,7 @@ import java.util.List;
 import java.util.Random;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
-import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.linkWithRel;
-import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.links;
+import static org.springframework.restdocs.hypermedia.HypermediaDocumentation.*;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.documentationConfiguration;
 import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
@@ -209,7 +208,7 @@ class QnaRestControllerTest {
         String postsList = "_embedded.postsList";
 
         this.mockMvc.perform(get("/api/qna")
-                .param("page", "1")
+                .param("page", "0")
                 .param("size","6")
                 .param("sort","createDateTime,DESC")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -233,9 +232,8 @@ class QnaRestControllerTest {
                                 linkWithRel("profile").description("해당 Rest API profile 이동"),
                                 linkWithRel("first").description("생성된 qna 중 가장 첫 번째 페이지"),
                                 linkWithRel("last").description("생성된 qna 중 가장 마지막 페이지"),
-                                linkWithRel("prev").description("이전 qna 리스트 조회"),
+                                //linkWithRel("prev").description("이전 qna 리스트 조회"),
                                 linkWithRel("next").description("다음 qna 리스트 조회")
-
                         ),
                         requestHeaders(
                                 headerWithName(HttpHeaders.ACCEPT).description("accept 헤더"),
@@ -265,18 +263,60 @@ class QnaRestControllerTest {
                         )
 
                 ));
-        ;
+    }
+    @Test
+    @DisplayName("Qna 목록 조회 - trend/week/month/year/recent/search")
+    @Disabled
+    public void getQnaList_TODO(){
+
     }
 
     @Test
     @DisplayName("Qna 조회")
-    @Disabled
     public void getQnaDetail() throws Exception {
-        this.mockMvc.perform(get("/api/qna")
-                .contentType(MediaType.APPLICATION_JSON)
+        this.mockMvc.perform(get("/api/qna/1")
                 .accept(MediaTypes.HAL_JSON_VALUE)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host","localhost")
+                .header("X-Forwarded-Port", "8084")
         )
-                .andExpect(status().isBadRequest())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("useYn").isNotEmpty())
+                .andExpect(jsonPath("createDateTime").exists())
+                .andExpect(jsonPath("writerName").exists())
+                .andDo(print())
+                .andDo(document("get-qna-detail",
+                        links(
+                                linkWithRel("self").description("해당 qna 조회"),
+                                linkWithRel("update-qna").description("해당 qna 수정"),
+                                linkWithRel("delete-qna").description("해당 qna 삭제"),
+                                linkWithRel("likes").description("해당 qna 좋아요 링크"),
+                                linkWithRel("scripting").description("해당 qna 스크립트 링크"),
+                                linkWithRel("hashTag").description("해당 해시태그 화면 이동"),
+                                linkWithRel("profile").description("해당 Rest API profile 이동"),
+                                linkWithRel("create-reply").description("댓글 post 링크"),
+                                linkWithRel("create-re-reply").description("대댓글 post 링크"),
+                                linkWithRel("like-reply").description("댓글 좋아요 링크")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("accept 헤더")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json")
+                        ),
+                        relaxedResponseFields(
+                                fieldWithPath("id").description("조회한 qna id"),
+                                fieldWithPath("writerName").description("qna 작성자 name"),
+                                fieldWithPath("writerId").description("qna 작성자 id"),
+                                fieldWithPath("title").description("qna 제목"),
+                                fieldWithPath("content").description("qna 내용"),
+                                fieldWithPath("views").description("qna 조회수"),
+                                fieldWithPath("likes").description("qna 좋아요 수"),
+                                fieldWithPath("replyList").description("댓글 리스트"),
+                                fieldWithPath("hashTags").description("해시태그 리스트"),
+                                fieldWithPath("createDateTime").description("qna 생성시간")
+                        )
+                ));
 
         ;
     }
