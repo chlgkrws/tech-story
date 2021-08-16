@@ -8,6 +8,7 @@ import com.blogcode.posts.domain.PostType;
 import com.blogcode.posts.dto.QnaDTO;
 import com.blogcode.posts.repository.QnaRepository;
 import com.blogcode.posts.service.QnaService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -38,8 +39,7 @@ import static org.springframework.restdocs.operation.preprocess.Preprocessors.*;
 import static org.springframework.restdocs.payload.PayloadDocumentation.*;
 import static org.springframework.restdocs.request.RequestDocumentation.parameterWithName;
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -264,12 +264,7 @@ class QnaRestControllerTest {
 
                 ));
     }
-    @Test
-    @DisplayName("Qna 목록 조회 - trend/week/month/year/recent/search")
-    @Disabled
-    public void getQnaList_TODO(){
 
-    }
 
     @Test
     @DisplayName("Qna 조회")
@@ -322,6 +317,121 @@ class QnaRestControllerTest {
     }
 
 
+    @Test
+    @DisplayName("Qna 목록 조회 - trend")
+    public void getQnaList_trend() throws Exception {
+        String postsList = "_embedded.postsList";
+
+
+        this.mockMvc.perform(get("/api/qna")
+                .param("page", "0")
+                .param("size","6")
+                .param("sort","createDateTime,DESC")
+                .param("interval","day")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaTypes.HAL_JSON_VALUE)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host","localhost")
+                .header("X-Forwarded-Port", "8084")
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath(postsList+"[0].createId").exists())
+                .andExpect(jsonPath(postsList+"[0].createDateTime").exists())
+                .andExpect(jsonPath(postsList+"[0].id").exists())
+                .andExpect(jsonPath(postsList+"[0].title").exists())
+                .andExpect(jsonPath(postsList+"[0].content").exists())
+                .andExpect(jsonPath(postsList+"[0].writerName").exists())
+                .andExpect(jsonPath(postsList+"[0].writerEmail").exists())
+                .andExpect(jsonPath(postsList+"[0].views").exists())
+                .andExpect(jsonPath(postsList+"[0].likes").exists())
+                .andExpect(jsonPath(postsList+"[0].thumbnailPath").exists())
+                .andExpect(jsonPath(postsList+"[0].countScripting").exists())
+                .andDo(print())
+                ;
+
+    }
+
+    @Test
+    @DisplayName("Qna 목록 조회 - trend/recent/search")
+    public void getQnaList_TODO() throws Exception {
+
+    }
+
+
+    @Test
+    @DisplayName("Qna 수정 - 성공")
+    public void qnaUpdate_OK() throws Exception {
+        QnaDTO qnaDTO = QnaDTO.builder()
+                .title("테스트 글 - 수정")
+                .content("테스트 - 수정")
+                .thumbnailPath("/ - 수정")
+                .tempSaveStatus("N - 수정")
+                .memberId(1L)
+                .dType(PostType.QNA)
+                .hashTag(List.of("박요한","최학준"))
+                .build();
+
+        this.mockMvc.perform(put("/api/qna/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host","localhost")
+                .header("X-Forwarded-Port", "8084")
+                .accept(MediaTypes.HAL_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(qnaDTO))
+        )
+                .andDo(print())
+                .andExpect(jsonPath("id").exists())
+                .andExpect(jsonPath("dtype").exists())
+                .andExpect(jsonPath("createId").exists())
+                .andDo(document("update-qna",
+                        links(
+                                linkWithRel("self").description("생성된 qna 조회"),
+                                linkWithRel("query-qna").description("qna 목록 조회"),
+                                linkWithRel("profile").description("해당 Rest API profile 이동")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("accept 헤더"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("content type 헤더")
+                        ),
+                        requestFields(
+                                fieldWithPath("title").description("수정할 qna 제목"),
+                                fieldWithPath("content").description("수정할 qna 내용"),
+                                fieldWithPath("tempSaveStatus").description("수정할 qna의 임시저장 여부"),
+                                fieldWithPath("dtype").description("수정할 qna의 타입(블로그/Q&A)"),
+                                fieldWithPath("thumbnailPath").description("수정할 qna의 썸네일 경로(옵션)"),
+                                fieldWithPath("hashTag").description("수정할 qna의 해시태그들 (옵션/List)")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json"),
+                                headerWithName(HttpHeaders.LOCATION).description("응답 Location")
+                        ),
+                        relaxedResponseFields(
+                                fieldWithPath("id").description("qna의 식별자"),
+                                fieldWithPath("title").description("수정된 qna의 제목"),
+                                fieldWithPath("content").description("수정된 qna의 내용"),
+                                fieldWithPath("thumbnailPath").description("수정된 qna의 썸네일 경로"),
+                                fieldWithPath("tempSaveStatus").description("수정된 qna의 임시저장여부"),
+                                fieldWithPath("dtype").description("수정된 qna의 타입(블로그/Q&A)"),
+                                fieldWithPath("_links.self").description("수정된 qna 조회 URI"),
+                                fieldWithPath("_links.query-qna").description("qna 목록 조회"),
+                                fieldWithPath("_links.profile").description("해당 Rest API profile 이동"),
+
+                                fieldWithPath("createId").description("qna를 생성한 멤버 Id"),
+                                fieldWithPath("createDateTime").description("qna를 생성한 시간"),
+                                fieldWithPath("modifyId").description("qna를 마지막으로 수정한 멤버 Id"),
+                                fieldWithPath("modifyDateTime").description("qna를 마지막으로 수정한 시간")
+                        )
+                ))
+        ;
+    }
+
+
+    @Test
+    @DisplayName("Qna 수정 - 실패")
+    public void qnaUpdate_FAIL() {
+
+    }
+
 
 
     public Member getRandomMember(){
@@ -332,6 +442,7 @@ class QnaRestControllerTest {
         Member member = Member.builder()
                 .email(email)
                 .password(password)
+                .name("이진호")
                 .build();
 
         this.memberRepository.save(member);

@@ -1,12 +1,15 @@
 package com.blogcode.posts.service;
 
 import com.blogcode.posts.domain.Posts;
+import com.blogcode.posts.dto.QnaDTO;
 import com.blogcode.posts.repository.QnaRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -31,5 +34,10 @@ public class QnaService {
 
         return this.qnaRepository.findAll(pageable);
     }
+
+    public void qnaToEntity(QnaDTO qnaDTO, Posts posts) {
+
+    }
+
 
 }

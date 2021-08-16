@@ -65,14 +65,14 @@ public class QnaRestController {
         Page<Posts> page = this.qnaService.findByPostList(interval, search, pageable);
         var resQna = assembler.toModel(page);
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(QnaRestController.class);
+        WebMvcLinkBuilder self = linkTo(QnaRestController.class);
 
-        resQna.add(selfLinkBuilder.slash("?interval=day").withRel("trend"));
-        resQna.add(selfLinkBuilder.slash("?interval=week").withRel("trend-week"));
-        resQna.add(selfLinkBuilder.slash("?interval=month").withRel("trend-month"));
-        resQna.add(selfLinkBuilder.slash("?interval=year").withRel("trend-year"));
-        resQna.add(selfLinkBuilder.slash("?interval=recent").withRel("recent"));
-        resQna.add(selfLinkBuilder.slash("?search={keyword}").withRel("search"));
+        resQna.add(self.slash("?interval=day").withRel("trend"));
+        resQna.add(self.slash("?interval=week").withRel("trend-week"));
+        resQna.add(self.slash("?interval=month").withRel("trend-month"));
+        resQna.add(self.slash("?interval=year").withRel("trend-year"));
+        resQna.add(self.slash("?interval=recent").withRel("recent"));
+        resQna.add(self.slash("?search={keyword}").withRel("search"));
         resQna.add(linkTo(BlogRestController.class).withRel("blog"));
         resQna.add(Link.of("/docs/qna.html#resources-get-qna-list").withRel("profile"));
 
@@ -89,12 +89,12 @@ public class QnaRestController {
 
         // TODO qna 조회수
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(QnaRestController.class);
+        WebMvcLinkBuilder self = linkTo(QnaRestController.class);
         EntityModel<Posts> resQna = EntityModel.of(posts);
         Long postId = posts.getId();
 
-        resQna.add(selfLinkBuilder.slash(postId).withSelfRel());
-        resQna.add(selfLinkBuilder.slash(postId).withRel("update"));
+        resQna.add(self.slash(postId).withSelfRel());
+        resQna.add(self.slash(postId).withRel("update"));
 
         return ResponseEntity.ok(resQna);
     }
@@ -121,13 +121,13 @@ public class QnaRestController {
 
         this.hashTagRepository.saveAll(posts.getHashTags());
 
-        WebMvcLinkBuilder selfLinkBuilder = linkTo(QnaRestController.class);
-        URI createUri = selfLinkBuilder.slash(id).toUri();
+        WebMvcLinkBuilder self = linkTo(QnaRestController.class);
+        URI createUri = self.slash(id).toUri();
 
         EntityModel<Posts> resQna = EntityModel.of(posts);
-        resQna.add(selfLinkBuilder.slash(id).withSelfRel());
-        resQna.add(selfLinkBuilder.withRel("query-qna"));
-        resQna.add(selfLinkBuilder.slash(id).withRel("update-qna"));
+        resQna.add(self.slash(id).withSelfRel());
+        resQna.add(self.withRel("query-qna"));
+        resQna.add(self.slash(id).withRel("update-qna"));
         resQna.add(Link.of("/docs/qna.html#resources-qna-create").withRel("profile"));
 
         return ResponseEntity.created(createUri).body(resQna);
@@ -135,7 +135,28 @@ public class QnaRestController {
 
     // TODO qna 수정
     @PutMapping("/{id}")
-    public ResponseEntity updateQna(@PathVariable Long id){
+    public ResponseEntity updateQna(@PathVariable Long id, @RequestBody @Valid QnaDTO qnaDTO, Errors errors){
+
+        if(errors.hasErrors()){
+            return badRequest(errors);
+        }
+
+        qnaValidator.validate(qnaDTO, errors);
+        if(errors.hasErrors()){
+            return badRequest(errors);
+        }
+
+
+        Posts posts = this.qnaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        // TODO this.qnaService.qnaToEntity(qnaDTO, posts);
+
+
+        WebMvcLinkBuilder self = linkTo(QnaRestController.class);
+
+        EntityModel<Posts> resQna = EntityModel.of(posts);
+        resQna.add(self.slash(id).withSelfRel());
+        resQna.add(self.withRel("query-qna"));
+        resQna.add(Link.of("/docs/qna.html/resources-qna-update").withRel("profile"));
 
         return ResponseEntity.ok().build();
     }
@@ -166,6 +187,8 @@ public class QnaRestController {
         resErrors.add(Link.of(frontURI).withRel("index"));
         return ResponseEntity.badRequest().body(resErrors);
     }
+
+
 
 
 }
