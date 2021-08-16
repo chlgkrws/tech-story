@@ -5,6 +5,8 @@ import com.blogcode.member.domain.Member;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -17,6 +19,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
+@DynamicInsert
+@DynamicUpdate
 public class Posts extends BaseEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY)
