@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 /**
- * Description : mapstruct interface (Entity <-> Dto
+ * Description : mapstruct interface (Entity <-> Dto)
  *
  * @author leejinho
  * @version 1.0
