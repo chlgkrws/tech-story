@@ -1,35 +1,39 @@
 package com.blogcode.posts.service;
 
+import com.blogcode.mapper.BlogMapper;
 import com.blogcode.posts.domain.Posts;
-import com.blogcode.posts.repository.QnaRepository;
+import com.blogcode.posts.dto.BlogDto;
+import com.blogcode.posts.repository.BlogRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+
 @Service
 @Transactional
 @RequiredArgsConstructor
-public class QnaService {
+public class BlogService {
+    private final BlogRepository blogRepository;
+    private final BlogMapper blogMapper;
 
-    private final QnaRepository qnaRepository;
-
-    private final QnaIntervalService qnaIntervalService;
-
-    public Page<Posts> findByPostList(String interval, String search, Pageable pageable) {
-
-        if(interval == null && search != null){
-            return findByPostList(search, pageable);
-        }
-
-        return this.qnaIntervalService.findByPostList(interval, pageable);
+    public Page<Posts> findAll(Pageable pageable) {
+        return blogRepository.findAll(pageable);
     }
 
-    // TODO with search
-    public Page<Posts> findByPostList(String search, Pageable pageable) {
-
-        return this.qnaRepository.findAll(pageable);
+    public BlogDto saveByDto(BlogDto blogDto){
+        Posts savedPosts = blogRepository.save(blogMapper.toEntity(blogDto));
+        return blogMapper.toDto(Optional.of(savedPosts));
     }
 
+    public BlogDto findBlogById(Long id) {
+        return blogMapper.toDto(blogRepository.findById(id));
+    }
+
+    public Long deleteBoard(Long id) {
+        blogRepository.deleteById(id);
+        return id;
+    }
 }
