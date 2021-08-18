@@ -28,19 +28,6 @@ public class PostsService {
 //        return postsRepository.save(posts);
 //    }
 
-    public BlogDto saveByDto(BlogDto blogDto){
-        Posts savedPosts = postsRepository.save(blogMapper.toEntity(blogDto));
-        return blogMapper.toDto(Optional.of(savedPosts));
-    }
-
-    public List<BlogDto> findAllBlog() {
-        return blogMapper.toDtoList(postsRepository.findAll());
-    }
-
-    public BlogDto findBlogById(Long id) {
-        return blogMapper.toDto(postsRepository.findById(id));
-    }
-
     public Long deleteBoard(Long id) {
         postsRepository.deleteById(id);
         return id;

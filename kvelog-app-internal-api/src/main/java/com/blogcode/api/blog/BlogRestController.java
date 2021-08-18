@@ -1,14 +1,17 @@
 package com.blogcode.api.blog;
 
+import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.dto.BlogDto;
-import com.blogcode.posts.service.PostsService;
+import com.blogcode.posts.service.BlogService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.List;
 
 
 @RestController
@@ -16,19 +19,24 @@ import java.util.List;
 @RequestMapping(value = "/api/blog", produces = MediaTypes.HAL_JSON_VALUE)
 public class BlogRestController {
 
-    private final PostsService postsService;
+    private final BlogService blogService;
 
     // TODO blog 목록 조회
     @GetMapping
-    public ResponseEntity<List<BlogDto>> queryBlogs() {
+    public ResponseEntity queryBlogs(@RequestParam(required = false) String page,
+                                     @RequestParam(required = false) String period,
+                                     Pageable pageable) {
+        Page<Posts> posts = this.blogService.findAll(pageable);
 
-        return ResponseEntity.ok(postsService.findAllBlog());
+        WebMvcLinkBuilder webMvcLinkBuilder = WebMvcLinkBuilder.linkTo(BlogRestController.class);
+
+        return ResponseEntity.ok().build();
     }
 
     // TODO blog 단일 조회
     @GetMapping("/{id}")
     public ResponseEntity<BlogDto> getBlog(@PathVariable Long id){
-        return ResponseEntity.ok(postsService.findBlogById(id));
+        return ResponseEntity.ok(blogService.findBlogById(id));
     }
 
 //    // TODO blog 생성
@@ -45,7 +53,7 @@ public class BlogRestController {
 //            return badRequest(errors);
 //        }
 //
-//        Posts savedPost = this.postsService.save(posts);
+//        Posts savedPost = this.blogService.save(posts);
 //        WebMvcLinkBuilder selfLinkBuilder = linkTo(BlogRestController.class).slash(savedPost.getId());
 //        URI createUri = selfLinkBuilder.toUri();
 //
@@ -61,19 +69,19 @@ public class BlogRestController {
     // TODO blog 생성
     @PostMapping
     public ResponseEntity<BlogDto> createBlog(@RequestBody @Valid BlogDto blogDto) {
-        return ResponseEntity.ok(postsService.saveByDto(blogDto));
+        return ResponseEntity.ok(blogService.saveByDto(blogDto));
     }
 
     // TODO blog 수정
     @PutMapping("/{id}")
     public ResponseEntity<BlogDto> modifyBlog(@RequestBody @Valid BlogDto blogDto){
-        return ResponseEntity.ok(postsService.saveByDto(blogDto));
+        return ResponseEntity.ok(blogService.saveByDto(blogDto));
     }
 
     // TODO blog 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity<Long> deleteBlog(@PathVariable Long id){
-        return ResponseEntity.ok(postsService.deleteBoard(id));
+        return ResponseEntity.ok(blogService.deleteBoard(id));
     }
 
 //    // TODO index controller 추가 후 생성

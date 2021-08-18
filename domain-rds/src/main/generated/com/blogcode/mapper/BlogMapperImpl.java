@@ -1,10 +1,7 @@
 package com.blogcode.mapper;
 
-import com.blogcode.posts.domain.HashTag;
 import com.blogcode.posts.domain.Posts;
-import com.blogcode.posts.domain.Posts.PostsBuilder;
 import com.blogcode.posts.dto.BlogDto;
-import com.blogcode.posts.dto.BlogDto.BlogDtoBuilder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -13,21 +10,21 @@ import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-08-17T09:15:42+0900",
+    date = "2021-08-18T18:10:25+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.12 (Amazon.com Inc.)"
 )
 @Component
 public class BlogMapperImpl implements BlogMapper {
 
     @Override
-    public BlogDto toDto(Optional<Posts> arg0) {
-        if ( arg0 == null ) {
+    public BlogDto toDto(Optional<Posts> entity) {
+        if ( entity == null ) {
             return null;
         }
 
-        BlogDtoBuilder blogDto = BlogDto.builder();
+        BlogDto blogDto = new BlogDto();
 
-        return blogDto.build();
+        return blogDto;
     }
 
     @Override
@@ -36,21 +33,9 @@ public class BlogMapperImpl implements BlogMapper {
             return null;
         }
 
-        BlogDtoBuilder blogDto = BlogDto.builder();
+        BlogDto blogDto = new BlogDto();
 
-        blogDto.id( posts.getId() );
-        blogDto.title( posts.getTitle() );
-        blogDto.content( posts.getContent() );
-        blogDto.writerName( posts.getWriterName() );
-        blogDto.tempSaveStatus( posts.getTempSaveStatus() );
-        blogDto.thumbnailPath( posts.getThumbnailPath() );
-        blogDto.likes( posts.getLikes() );
-        List<HashTag> list = posts.getHashTags();
-        if ( list != null ) {
-            blogDto.hashTags( new ArrayList<HashTag>( list ) );
-        }
-
-        return blogDto.build();
+        return blogDto;
     }
 
     @Override
@@ -59,21 +44,9 @@ public class BlogMapperImpl implements BlogMapper {
             return null;
         }
 
-        PostsBuilder posts = Posts.builder();
+        Posts posts = new Posts();
 
-        posts.id( blogDto.getId() );
-        posts.title( blogDto.getTitle() );
-        posts.content( blogDto.getContent() );
-        posts.writerName( blogDto.getWriterName() );
-        posts.likes( blogDto.getLikes() );
-        posts.thumbnailPath( blogDto.getThumbnailPath() );
-        posts.tempSaveStatus( blogDto.getTempSaveStatus() );
-        List<HashTag> list = blogDto.getHashTags();
-        if ( list != null ) {
-            posts.hashTags( new ArrayList<HashTag>( list ) );
-        }
-
-        return posts.build();
+        return posts;
     }
 
     @Override

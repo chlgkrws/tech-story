@@ -13,6 +13,7 @@ import java.util.List;
  * @author leejinho
  * @version 1.0
  */
+//@Mapper
 @Mapper(componentModel = "spring")
 public interface BlogMapper extends StructMapper<BlogDto, Posts> {
 //    BlogMapper INSTANCE = Mappers.getMapper(BlogMapper.class);
