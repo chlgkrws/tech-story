@@ -70,17 +70,7 @@ class QnaRestControllerTest {
     @Autowired
     MemberRepository memberRepository;
 
- /*   @BeforeEach
-    public void setUp(RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-                .apply(documentationConfiguration(restDocumentation).uris()
-                        .withScheme("http")
-                        .withHost("localhost")
-                        .withPort(8084))
-                .alwaysDo(document("{method-name}",
-                        preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .build();
-    }*/
+
 
     @Test
     @DisplayName("Qna 생성")

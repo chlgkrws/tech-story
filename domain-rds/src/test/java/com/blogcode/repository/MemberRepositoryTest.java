@@ -3,7 +3,6 @@ package com.blogcode.repository;
 import com.blogcode.member.domain.Member;
 import com.blogcode.member.repository.MemberRepository;
 import org.assertj.core.api.Assertions;
-import org.junit.Assert;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
