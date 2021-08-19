@@ -25,11 +25,11 @@ public class BlogService {
 
     public BlogDto saveByDto(BlogDto blogDto){
         Posts savedPosts = blogRepository.save(blogMapper.toEntity(blogDto));
-        return blogMapper.toDto(Optional.of(savedPosts));
+        return blogMapper.toDto(savedPosts);
     }
 
     public BlogDto findBlogById(Long id) {
-        return blogMapper.toDto(blogRepository.findById(id));
+        return blogMapper.toDto(blogRepository.findById(id).get());
     }
 
     public Long deleteBoard(Long id) {

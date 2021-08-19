@@ -17,10 +17,4 @@ import java.util.List;
 @Mapper(componentModel = "spring")
 public interface BlogMapper extends StructMapper<BlogDto, Posts> {
 //    BlogMapper INSTANCE = Mappers.getMapper(BlogMapper.class);
-
-//    < IF not use extends, add this code >
-    BlogDto toDto(Posts posts);
-    Posts toEntity(BlogDto blogDto);
-    List<BlogDto> toDtoList(List<Posts> posts);
-    List<Posts> toEntityList(List<BlogDto> blogDtos);
 }

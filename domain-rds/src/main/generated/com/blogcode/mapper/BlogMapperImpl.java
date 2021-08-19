@@ -4,27 +4,22 @@ import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.dto.BlogDto;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2021-08-18T18:10:25+0900",
+    date = "2021-08-19T14:29:06+0900",
     comments = "version: 1.4.2.Final, compiler: javac, environment: Java 11.0.12 (Amazon.com Inc.)"
 )
 @Component
 public class BlogMapperImpl implements BlogMapper {
 
     @Override
-    public BlogDto toDto(Optional<Posts> entity) {
-        if ( entity == null ) {
-            return null;
+    public void updateFromDto(BlogDto dto, Posts entity) {
+        if ( dto == null ) {
+            return;
         }
-
-        BlogDto blogDto = new BlogDto();
-
-        return blogDto;
     }
 
     @Override
