@@ -3,8 +3,10 @@ package com.blogcode.mapper;
 import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.dto.BlogDto;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 /**
@@ -16,5 +18,4 @@ import java.util.List;
 //@Mapper
 @Mapper(componentModel = "spring")
 public interface BlogMapper extends StructMapper<BlogDto, Posts> {
-//    BlogMapper INSTANCE = Mappers.getMapper(BlogMapper.class);
 }
