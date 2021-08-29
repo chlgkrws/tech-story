@@ -68,12 +68,15 @@ public class Posts extends BaseEntity {
     @JsonIgnore
     private Member member;
 
+    @JsonIgnore
     @OneToMany(mappedBy = "posts")
     private List<Reply> replyList = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "posts")
     private List<HashTag> hashTags = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "posts")
     private List<Likes> likesList = new ArrayList<>();
 

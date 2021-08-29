@@ -55,4 +55,6 @@ public class BaseEntity {
     @Column
     @ColumnDefault("1")
     private Integer useYn;
+    
+    // TODO 스프링 시큐리티 적용 -> create_id, modify_id 업데이트 
 }

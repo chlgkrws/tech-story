@@ -36,7 +36,11 @@ public class QnaService {
     }
 
     public void qnaToEntity(QnaDTO qnaDTO, Posts posts) {
-
+        posts.setTitle(qnaDTO.getTitle());
+        posts.setContent(qnaDTO.getContent());
+        posts.setThumbnailPath(qnaDTO.getThumbnailPath());
+        posts.setTempSaveStatus(qnaDTO.getTempSaveStatus());
+        posts.setDType(qnaDTO.getDType());
     }
 
 

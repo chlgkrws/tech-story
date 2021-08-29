@@ -33,5 +33,4 @@ public class QnaDTO {
     @NotNull
     private Long memberId;
 
-    private List<String> hashTag = new ArrayList<>();
 }

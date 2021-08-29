@@ -4,8 +4,12 @@ import com.blogcode.InternalApiApplication;
 import com.blogcode.common.RestDocsConfiguration;
 import com.blogcode.member.domain.Member;
 import com.blogcode.member.repository.MemberRepository;
+import com.blogcode.posts.domain.HashTag;
 import com.blogcode.posts.domain.PostType;
+import com.blogcode.posts.domain.Posts;
+import com.blogcode.posts.dto.HashTagDTO;
 import com.blogcode.posts.dto.QnaDTO;
+import com.blogcode.posts.repository.HashTagRepository;
 import com.blogcode.posts.repository.QnaRepository;
 import com.blogcode.posts.service.QnaService;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -25,10 +29,12 @@ import org.springframework.restdocs.RestDocumentationContextProvider;
 import org.springframework.restdocs.RestDocumentationExtension;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Random;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
@@ -70,6 +76,9 @@ class QnaRestControllerTest {
     @Autowired
     MemberRepository memberRepository;
 
+    @Autowired
+    HashTagRepository hashTagRepository;
+
  /*   @BeforeEach
     public void setUp(RestDocumentationContextProvider restDocumentation) {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
@@ -88,6 +97,10 @@ class QnaRestControllerTest {
         Member member = getRandomMember();
         System.out.println("member = " + member.getId());
 
+        HashTagDTO hashTag = HashTagDTO.builder()
+                .keyword("박요한")
+                .build();
+
         QnaDTO qnaDTO = QnaDTO.builder()
                 .title("테스트 글")
                 .content("테스트")
@@ -95,7 +108,6 @@ class QnaRestControllerTest {
                 .tempSaveStatus("N")
                 .dType(PostType.QNA)
                 .memberId(member.getId())
-                .hashTag(List.of("박요한","최학준"))
                 .build();
 
         this.mockMvc.perform(post("/api/qna")
@@ -127,8 +139,7 @@ class QnaRestControllerTest {
                                 fieldWithPath("tempSaveStatus").description("생성할 qna의 임시저장 여부"),
                                 fieldWithPath("memberId").description("생성할 qna 작성자 Id"),
                                 fieldWithPath("dtype").description("생성할 qna의 타입(블로그/Q&A)"),
-                                fieldWithPath("thumbnailPath").description("생성할 qna의 썸네일 경로(옵션)"),
-                                fieldWithPath("hashTag").description("생성할 qna의 해시태그들 (옵션/List)")
+                                fieldWithPath("thumbnailPath").description("생성할 qna의 썸네일 경로(옵션)")
                         ),
                         responseHeaders(
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json"),
@@ -359,16 +370,15 @@ class QnaRestControllerTest {
 
 
     @Test
-    @DisplayName("Qna 수정 - 성공")
+    @DisplayName("Qna 수정")
     public void qnaUpdate_OK() throws Exception {
         QnaDTO qnaDTO = QnaDTO.builder()
                 .title("테스트 글 - 수정")
-                .content("테스트 - 수정")
-                .thumbnailPath("/ - 수정")
+                .content("테스트 - 수정2")
+                .thumbnailPath("/ - 수정2")
                 .tempSaveStatus("N - 수정")
                 .memberId(1L)
                 .dType(PostType.QNA)
-                .hashTag(List.of("박요한","최학준"))
                 .build();
 
         this.mockMvc.perform(put("/api/qna/1")
@@ -399,11 +409,10 @@ class QnaRestControllerTest {
                                 fieldWithPath("tempSaveStatus").description("수정할 qna의 임시저장 여부"),
                                 fieldWithPath("dtype").description("수정할 qna의 타입(블로그/Q&A)"),
                                 fieldWithPath("thumbnailPath").description("수정할 qna의 썸네일 경로(옵션)"),
-                                fieldWithPath("hashTag").description("수정할 qna의 해시태그들 (옵션/List)")
+                                fieldWithPath("memberId").description("수정할 qna의 작성자 id")
                         ),
                         responseHeaders(
-                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json"),
-                                headerWithName(HttpHeaders.LOCATION).description("응답 Location")
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json")
                         ),
                         relaxedResponseFields(
                                 fieldWithPath("id").description("qna의 식별자"),
@@ -425,12 +434,39 @@ class QnaRestControllerTest {
         ;
     }
 
-
     @Test
-    @DisplayName("Qna 수정 - 실패")
-    public void qnaUpdate_FAIL() {
+    @DisplayName("Qna 삭제")
+    public void deleteQna() throws Exception {
+        Member member = getRandomMember();
 
+        Posts posts = Posts.builder()
+                .title("삭제 테스트")
+                .content("삭제 테스트")
+                .thumbnailPath("/")
+                .dType(PostType.QNA)
+                .build();
+        posts.setMemberData(member);
+
+        Posts save = this.qnaRepository.save(posts);
+        Long id = save.getId();
+
+
+        this.mockMvc.perform(delete("/api/qna/"+id)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host","localhost")
+                .header("X-Forwarded-Port", "8084")
+        )
+                .andExpect(status().isOk())
+                .andDo(document("delete-qna",
+                        links(
+                                linkWithRel("self").description("생성된 qna 조회"),
+                                linkWithRel("query-qna").description("qna 목록 조회"),
+                                linkWithRel("profile").description("해당 Rest API profile 이동")
+                        )
+                ))
+        ;
     }
+
 
 
 
@@ -461,7 +497,6 @@ class QnaRestControllerTest {
                 .tempSaveStatus("N" + ints)
                 .dType(PostType.QNA)
                 .memberId(randomMember.getId())
-                .hashTag(List.of("박요한", "최학준"))
                 .build();
         return qnaDTO;
     }

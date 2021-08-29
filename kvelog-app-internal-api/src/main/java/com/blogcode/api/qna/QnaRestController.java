@@ -3,6 +3,7 @@ package com.blogcode.api.qna;
 import com.blogcode.api.blog.BlogRestController;
 import com.blogcode.member.domain.Member;
 import com.blogcode.member.repository.MemberRepository;
+import com.blogcode.posts.domain.HashTag;
 import com.blogcode.posts.domain.Posts;
 import com.blogcode.posts.dto.QnaDTO;
 import com.blogcode.posts.repository.HashTagRepository;
@@ -27,8 +28,11 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.net.URI;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -146,9 +150,8 @@ public class QnaRestController {
             return badRequest(errors);
         }
 
-
         Posts posts = this.qnaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
-        // TODO this.qnaService.qnaToEntity(qnaDTO, posts);
+        this.qnaService.qnaToEntity(qnaDTO, posts);
 
 
         WebMvcLinkBuilder self = linkTo(QnaRestController.class);
@@ -158,14 +161,26 @@ public class QnaRestController {
         resQna.add(self.withRel("query-qna"));
         resQna.add(Link.of("/docs/qna.html/resources-qna-update").withRel("profile"));
 
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(resQna);
     }
 
     // TODO qna 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity deleteQna(@PathVariable Long id){
 
-        return ResponseEntity.ok().build();
+        Posts posts = this.qnaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
+        Long postsId = posts.getId();
+
+        this.qnaRepository.delete(posts);
+
+        WebMvcLinkBuilder self = linkTo(QnaRestController.class);
+
+        EntityModel<Posts> resQna = EntityModel.of(posts);
+        resQna.add(self.slash(postsId).withSelfRel());
+        resQna.add(self.withRel("query-qna"));
+        resQna.add(Link.of("/docs/qna.html/resource-qna-delete", "profile"));
+
+        return ResponseEntity.ok(resQna);
     }
 
     // TODO qna 좋아요

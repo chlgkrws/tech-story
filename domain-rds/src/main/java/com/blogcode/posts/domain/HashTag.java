@@ -2,6 +2,8 @@ package com.blogcode.posts.domain;
 
 import com.blogcode.base.BaseEntity;
 import lombok.*;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -12,6 +14,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
+@DynamicInsert
+@DynamicUpdate
 public class HashTag extends BaseEntity {
     @Id @GeneratedValue(strategy = IDENTITY)
     private Long id;
