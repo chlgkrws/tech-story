@@ -52,7 +52,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 
 @SpringBootTest(classes = InternalApiApplication.class)
-//@ExtendWith({RestDocumentationExtension.class, SpringExtension.class})
 @AutoConfigureMockMvc
 @AutoConfigureRestDocs
 @Import(RestDocsConfiguration.class)
@@ -75,21 +74,6 @@ class QnaRestControllerTest {
 
     @Autowired
     MemberRepository memberRepository;
-
-    @Autowired
-    HashTagRepository hashTagRepository;
-
- /*   @BeforeEach
-    public void setUp(RestDocumentationContextProvider restDocumentation) {
-        this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context)
-                .apply(documentationConfiguration(restDocumentation).uris()
-                        .withScheme("http")
-                        .withHost("localhost")
-                        .withPort(8084))
-                .alwaysDo(document("{method-name}",
-                        preprocessRequest(prettyPrint()), preprocessResponse(prettyPrint())))
-                .build();
-    }*/
 
     @Test
     @DisplayName("Qna 생성")
