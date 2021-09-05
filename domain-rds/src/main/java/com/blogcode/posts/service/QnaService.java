@@ -35,6 +35,7 @@ public class QnaService {
         return this.qnaRepository.findAll(pageable);
     }
 
+    // TODO MapStruct
     public void qnaToEntity(QnaDTO qnaDTO, Posts posts) {
         posts.setTitle(qnaDTO.getTitle());
         posts.setContent(qnaDTO.getContent());

@@ -2,8 +2,11 @@ package com.blogcode.posts.domain;
 
 import com.blogcode.base.BaseEntity;
 import com.blogcode.member.domain.Member;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+import org.hibernate.annotations.DynamicInsert;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 
@@ -14,6 +17,8 @@ import static javax.persistence.GenerationType.IDENTITY;
 @Setter @Getter
 @AllArgsConstructor @NoArgsConstructor
 @Builder
+@DynamicUpdate
+@DynamicInsert
 public class Reply extends BaseEntity {
 
     @Id @GeneratedValue(strategy = IDENTITY)
@@ -41,10 +46,12 @@ public class Reply extends BaseEntity {
     @ColumnDefault("0")
     private Integer likes;
 
+    @JsonIgnore
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "posts_id")
     private Posts posts;
 
+    @JsonIgnore
     @ManyToOne(fetch = LAZY)
     @JoinColumn(name = "member_id")
     private Member member;

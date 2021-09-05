@@ -58,9 +58,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 class QnaRestControllerTest {
 
     @Autowired
-    WebApplicationContext context;
-
-    @Autowired
     MockMvc mockMvc;
 
     @Autowired
@@ -80,10 +77,6 @@ class QnaRestControllerTest {
     public void createQna() throws Exception{
         Member member = getRandomMember();
         System.out.println("member = " + member.getId());
-
-        HashTagDTO hashTag = HashTagDTO.builder()
-                .keyword("박요한")
-                .build();
 
         QnaDTO qnaDTO = QnaDTO.builder()
                 .title("테스트 글")
@@ -317,7 +310,6 @@ class QnaRestControllerTest {
     public void getQnaList_trend() throws Exception {
         String postsList = "_embedded.postsList";
 
-
         this.mockMvc.perform(get("/api/qna")
                 .param("page", "0")
                 .param("size","6")
@@ -347,7 +339,40 @@ class QnaRestControllerTest {
     }
 
     @Test
-    @DisplayName("Qna 목록 조회 - trend/recent/search")
+    @DisplayName("Qna 목록 조회 - search")
+    public void getQnaList_search() throws Exception {
+        String postsList = "_embedded.postsList";
+
+        this.mockMvc.perform(get("/api/qna")
+                .param("search","test")
+                .param("page", "0")
+                .param("size","6")
+                .param("sort","createDateTime,DESC")
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaTypes.HAL_JSON_VALUE)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host","localhost")
+                .header("X-Forwarded-Port", "8084")
+        )
+                .andExpect(status().isOk())
+                .andExpect(jsonPath(postsList+"[0].createId").exists())
+                .andExpect(jsonPath(postsList+"[0].createDateTime").exists())
+                .andExpect(jsonPath(postsList+"[0].id").exists())
+                .andExpect(jsonPath(postsList+"[0].title").exists())
+                .andExpect(jsonPath(postsList+"[0].content").exists())
+                .andExpect(jsonPath(postsList+"[0].writerName").exists())
+                .andExpect(jsonPath(postsList+"[0].writerEmail").exists())
+                .andExpect(jsonPath(postsList+"[0].views").exists())
+                .andExpect(jsonPath(postsList+"[0].likes").exists())
+                .andExpect(jsonPath(postsList+"[0].thumbnailPath").exists())
+                .andExpect(jsonPath(postsList+"[0].countScripting").exists())
+                .andDo(print())
+        ;
+
+    }
+
+    @Test
+    @DisplayName("Qna 목록 조회 - trend/recent")
     public void getQnaList_TODO() throws Exception {
 
     }

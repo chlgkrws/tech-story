@@ -26,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.HashMap;
@@ -86,12 +87,11 @@ public class QnaRestController {
 
     // TODO qna 조회
     @GetMapping("/{id}")
-    public ResponseEntity getQna(@PathVariable Long id){
-
+    public ResponseEntity getQna(HttpServletRequest request, @PathVariable Long id){
         Posts posts = this.qnaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
 
-
         // TODO qna 조회수
+        updatedViews(request);
 
         WebMvcLinkBuilder self = linkTo(QnaRestController.class);
         EntityModel<Posts> resQna = EntityModel.of(posts);
@@ -191,7 +191,7 @@ public class QnaRestController {
     }
 
     // TODO qna 조회수
-    public void updatedViews(HttpRequest request){
+    public void updatedViews(HttpServletRequest request){
 
     }
 

@@ -21,14 +21,4 @@ public class AppConfig {
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }
-//    @Bean
-//    public ReloadableResourceBundleMessageSource messageSource() {
-//        ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
-//        source.setBasename("classpath:/message");
-//        source.setDefaultEncoding("UTF-8");
-//        source.setCacheSeconds(60);
-//        source.setUseCodeAsDefaultMessage(true);
-//
-//        return source;
-//    }
 }
