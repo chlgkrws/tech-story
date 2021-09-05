@@ -15,5 +15,6 @@ public class MailRestController {
     @PostMapping
     public void sendEmail(MailDto mailDto) {
         memberService.createRegisterEmail(mailDto.getEmailAddress());
+        System.out.println("Aaa");
     }
 }
