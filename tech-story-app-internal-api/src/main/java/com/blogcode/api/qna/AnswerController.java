@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
 import org.springframework.hateoas.Link;
 import org.springframework.hateoas.MediaTypes;
@@ -17,9 +18,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 
 import java.net.URI;
+import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
@@ -40,10 +43,18 @@ public class AnswerController {
     private String frontURI;
 
     // TODO answer 조회
-    @GetMapping("/{id}")
+    @GetMapping("/{postId}")
     public ResponseEntity queryAnswer(@PathVariable Long postId){
 
-        return ResponseEntity.ok().build();
+        List<Reply> AnswerList = this.answerService.findAnswerList(postId);
+
+        WebMvcLinkBuilder self = linkTo(AnswerController.class);
+
+        CollectionModel<Reply> resAns = CollectionModel.of(AnswerList);
+        resAns.add(self.slash(postId).withSelfRel());
+        resAns.add(Link.of("/docs/answer.html#query-answer").withRel("profile"));
+
+        return ResponseEntity.ok(resAns);
     }
 
     // TODO answer 생성
@@ -54,12 +65,6 @@ public class AnswerController {
             return badRequest(errors);
         }
 
-        this.modelMapper.addMappings(new PropertyMap<AnswerDTO, Reply>() {
-            @Override
-            protected void configure() {
-                skip(destination.getId());
-            }
-        });
         Reply reply = this.modelMapper.map(answerDTO, Reply.class);
         reply.setMember(this.memberService.findById(answerDTO.getMemberId()));
         reply.setPosts(this.postsService.findById(answerDTO.getPostId()));
@@ -73,16 +78,24 @@ public class AnswerController {
         resAns.add(self.slash(id).withSelfRel());
         resAns.add(self.slash(id).withRel("update-answer"));
         resAns.add(self.withRel("query-answer"));
-        resAns.add(Link.of("/docs/answer.html/create-answer").withRel("profile"));
+        resAns.add(Link.of("/docs/answer.html#create-answer").withRel("profile"));
 
         return ResponseEntity.ok(resAns);
     }
 
     // TODO answer 수정
     @PutMapping("/{id}")
-    public ResponseEntity updateAnswer(@PathVariable Long id){
+    public ResponseEntity updateAnswer(@PathVariable Long id, @RequestBody @Valid AnswerDTO answerDTO, Errors errors){
 
-        return ResponseEntity.ok().build();
+        Reply reply = this.answerService.updateAnswer(id, answerDTO);
+
+        WebMvcLinkBuilder self = linkTo(AnswerController.class);
+
+        EntityModel<Reply> resRpl = EntityModel.of(reply);
+        resRpl.add(self.slash(id).withSelfRel());
+        resRpl.add(Link.of("/docs/answer.html#update-answer").withRel("profile"));
+
+        return ResponseEntity.ok(resRpl);
     }
 
     // TODO answer 삭제
