@@ -1,2 +1,31 @@
-server:
-  port: 8082
+spring:
+  jpa:
+    hibernate:
+      format_sql: true
+      ddl-auto: create-drop
+    database-platform: org.hibernate.dialect.H2Dialect
+    properties:
+      hibernate:
+        format_sql: true
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:tcp://localhost/~/test
+    driver-class-name: org.h2.Driver
+    data-username: sa
+    data-password:
+  # main:
+  #   allow-bean-definition-overriding: true
+      mail:
+        host: smtp.gmail.com
+        port: 587
+          username: email@gmail.com
+        password: password
+        properties:
+          mail.smtp.auth: true
+          mail.smtp.starttls.enable: true
+
+logging.level:
+  org.hibernate.SQL: debug
+
