@@ -224,6 +224,11 @@ class AnswerControllerTest extends SpringBaseTest {
                                 headerWithName(HttpHeaders.ACCEPT).description("accept 헤더"),
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("content type 헤더")
                         ),
+                        requestFields(
+                                fieldWithPath("title").description("수정할 answer의 제목"),
+                                fieldWithPath("content").description("수정할 answer의 내용")
+                        )
+                        ,
                         responseHeaders(
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json")
                         ),

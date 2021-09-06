@@ -32,9 +32,6 @@ Reply 테이블에는 Answer와 Reply Type 2가지가 존재한다.
 | `PUT`
 | 기존 리소스를 수정할 때 사용
 
-| `PATCH`
-| 기존 리소스의 일부를 수정할 때 사용
-
 | `DELETE`
 | 기존 리소스를 삭제할 떄 사용
 |===
@@ -98,34 +95,34 @@ Reply 테이블에는 Answer와 Reply Type 2가지가 존재한다.
 operation::index[snippets='response-body,http-response,links']
 
 [[resources-blogs]]
-== Blog
+== Answer
 
-Blog 리소스는 Question를 만들거나 조회할 때 사용한다.
+Reply 리소스는 Answer을 만들거나 조회할 때 사용한다.
 
-[[resources-events-list]]
-=== Question(qna) 목록 조회
+[[resources-answer-list]]
+=== Reply(answer) 목록 조회
 
-`GET` 요청을 사용하여 서비스의 모든 Question을 조회할 수 있다.
+`GET` 요청을 사용하여 하나의 Post내에 존재하는 answer들을 조회할 수 있다.
 
-operation::get-qna-list[snippets='request-headers,request-fields,http-request,response-headers,response-fields,http-response,links']
+operation::query-answer[snippets='http-request,response-headers,response-fields,http-response,links']
 
-[[resources-qna-create]]
+[[resources-answer-create]]
 === Reply(answer) 생성
 
-`POST` 요청을 사용해서 새 Question을 만들 수 있다.
+`POST` 요청을 사용해서 새 answer을 만들 수 있다.
 
-operation::create-answer[snippets='request-headers,request-fields,http-request,response-headers,response-fields,http-response,links']
+operation::create-answer[snippets='http-request,request-headers,request-fields,http-request,response-headers,response-fields,http-response,links']
 
-[[resources-events-get]]
-=== Question(qna) 조회
+[[resources-answer-update]]
+=== Reply(answer) 수정
 
-`Get` 요청을 사용해서 기존 Question(qna) 하나를 조회할 수 있다.
+`PUT` 요청을 사용해서 기존 answer을 수정할 수 있다.
 
-operation::get-an-event[snippets='curl-request,http-request,http-response,response-headers,response-fields,links']
+operation::update-answer[snippets='http-request,request-headers,request-fields,http-response,response-fields,links']
 
-[[resources-events-update]]
-=== Question(qna) 수정
+[[resources-answer-delete]]
+=== Reply(answer) 삭제
 
-`PUT` 요청을 사용해서 기존 Question(qna)를 수정할 수 있다.
+`DELETE` 요청을 사용해서 기존 answer을 삭제할 수 있다.
 
-operation::update-event[snippets='curl-request,request-headers,request-fields,http-response,response-fields,links']
+operation::delete-answer[snippets='http-request,request-headers,http-response,links']

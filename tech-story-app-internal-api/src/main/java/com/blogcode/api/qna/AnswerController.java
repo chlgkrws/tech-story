@@ -40,7 +40,7 @@ public class AnswerController {
     @Value("${msg.front-url}")
     private String frontURI;
 
-    // TODO answer 조회
+    // answer 조회
     @GetMapping("/{postId}")
     public ResponseEntity queryAnswer(@PathVariable Long postId){
 
@@ -55,7 +55,7 @@ public class AnswerController {
         return ResponseEntity.ok(resAns);
     }
 
-    // TODO answer 생성
+    // answer 생성
     @PostMapping
     public ResponseEntity createAnswer(@RequestBody @Valid AnswerDTO answerDTO, Errors errors){
 
