@@ -18,6 +18,10 @@ public class PostsService {
     private final PostsRepository postsRepository;
     private final BlogMapper blogMapper;
 
+    public Posts findById(Long postId) {
+        return this.postsRepository.findById(postId).orElseThrow(()-> new NoSuchElementException());
+    }
+
     public Posts findByEmail(Long id){
         Optional<Posts> posts = this.postsRepository.findByWriterEmail(id);
 

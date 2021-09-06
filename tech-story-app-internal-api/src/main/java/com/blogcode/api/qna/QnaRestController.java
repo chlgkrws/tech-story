@@ -26,6 +26,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.HashMap;
@@ -58,7 +59,7 @@ public class QnaRestController {
     private String frontURI;
 
 
-    // TODO qna 목록 조회
+    // qna 목록 조회
     @GetMapping
     public ResponseEntity queryQna(@RequestParam(required = false) String interval,
                                    @RequestParam(required = false) String search,
@@ -84,14 +85,13 @@ public class QnaRestController {
     }
 
 
-    // TODO qna 조회
+    // TODO link 정보 추가
     @GetMapping("/{id}")
-    public ResponseEntity getQna(@PathVariable Long id){
-
+    public ResponseEntity getQna(HttpServletRequest request, @PathVariable Long id){
         Posts posts = this.qnaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
 
-
         // TODO qna 조회수
+        updatedViews(request);
 
         WebMvcLinkBuilder self = linkTo(QnaRestController.class);
         EntityModel<Posts> resQna = EntityModel.of(posts);
@@ -102,7 +102,8 @@ public class QnaRestController {
 
         return ResponseEntity.ok(resQna);
     }
-    // TODO qna 생성
+
+    // qna 생성
     @PostMapping
     public ResponseEntity createQna(@RequestBody @Valid QnaDTO qnaDTO, Errors errors){
 
@@ -137,7 +138,7 @@ public class QnaRestController {
         return ResponseEntity.created(createUri).body(resQna);
     }
 
-    // TODO qna 수정
+    // qna 수정
     @PutMapping("/{id}")
     public ResponseEntity updateQna(@PathVariable Long id, @RequestBody @Valid QnaDTO qnaDTO, Errors errors){
 
@@ -164,7 +165,7 @@ public class QnaRestController {
         return ResponseEntity.ok(resQna);
     }
 
-    // TODO qna 삭제
+    // qna 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity deleteQna(@PathVariable Long id){
 
@@ -191,7 +192,7 @@ public class QnaRestController {
     }
 
     // TODO qna 조회수
-    public void updatedViews(HttpRequest request){
+    public void updatedViews(HttpServletRequest request){
 
     }
 

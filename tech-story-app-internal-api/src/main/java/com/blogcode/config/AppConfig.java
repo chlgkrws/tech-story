@@ -1,6 +1,9 @@
 package com.blogcode.config;
 
+import com.blogcode.posts.domain.Reply;
+import com.blogcode.posts.dto.AnswerDTO;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
@@ -11,7 +14,14 @@ public class AppConfig {
 
     @Bean
     public ModelMapper modelMapper() {
-        return new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();
+        modelMapper.addMappings(new PropertyMap<AnswerDTO, Reply>() {
+            @Override
+            protected void configure() {
+                skip(destination.getId());
+            }
+        });
+        return modelMapper;
     }
 
     @Bean
@@ -21,14 +31,4 @@ public class AppConfig {
         characterEncodingFilter.setForceEncoding(true);
         return characterEncodingFilter;
     }
-//    @Bean
-//    public ReloadableResourceBundleMessageSource messageSource() {
-//        ReloadableResourceBundleMessageSource source = new ReloadableResourceBundleMessageSource();
-//        source.setBasename("classpath:/message");
-//        source.setDefaultEncoding("UTF-8");
-//        source.setCacheSeconds(60);
-//        source.setUseCodeAsDefaultMessage(true);
-//
-//        return source;
-//    }
 }

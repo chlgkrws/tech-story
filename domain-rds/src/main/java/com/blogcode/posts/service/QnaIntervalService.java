@@ -16,6 +16,7 @@ public class QnaIntervalService {
 
     private final QnaRepository qnaRepository;
 
+    // TODO Interval
     public Page<Posts> findByPostList(String interval, Pageable pageable) {
 
         return this.qnaRepository.findAll(pageable);
