@@ -12,6 +12,7 @@ import com.blogcode.posts.dto.QnaDTO;
 import com.blogcode.posts.repository.QnaRepository;
 import com.blogcode.posts.service.QnaService;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import org.json.JSONObject;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +23,11 @@ import org.springframework.context.annotation.Import;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
+import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultActions;
 
+import java.util.Map;
 import java.util.Random;
 
 import static org.springframework.restdocs.headers.HeaderDocumentation.*;
@@ -240,6 +244,63 @@ class AnswerControllerTest extends SpringBaseTest {
                                 fieldWithPath("createDateTime").description("answer를 생성한 시간"),
                                 fieldWithPath("modifyId").description("answer를 마지막으로 수정한 멤버 Id"),
                                 fieldWithPath("modifyDateTime").description("answer를 마지막으로 수정한 시간")
+                        )
+                ))
+        ;
+    }
+
+    @Test
+    @DisplayName("Answer - 삭제")
+    public void deleteAnswer() throws Exception {
+        // 멤버 생성
+        Member member = getRandomMember();
+
+        // answer 생성
+        AnswerDTO answerDTO = AnswerDTO.builder()
+                .upperId(null)
+                .depth(null)
+                .title("테스트 댓글")
+                .content("테스트 컨텐트")
+                .writerEmail("cgw981@naver.com")
+                .likes(null)
+                .postId(1L)
+                .memberId(member.getId())
+                .build();
+
+        ResultActions perform = this.mockMvc.perform(post("/api/answer")
+                .contentType(MediaType.APPLICATION_JSON)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host", "localhost")
+                .header("X-Forwarded-Port", "8084")
+                .accept(MediaTypes.HAL_JSON_VALUE)
+                .content(objectMapper.writeValueAsString(answerDTO))
+        );
+
+        MockHttpServletResponse response = perform.andReturn().getResponse();
+        String contentAsString = response.getContentAsString();
+        JSONObject json = new JSONObject(contentAsString);
+        Long postId = json.getLong("id");
+
+       this.mockMvc.perform(delete("/api/answer/{id}",postId)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaTypes.HAL_JSON_VALUE)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host","localhost")
+                .header("X-Forwarded-Port", "8084")
+                .content(this.objectMapper.writeValueAsString(answerDTO))
+        )
+                .andDo(print())
+                .andDo(document("delete-answer",
+                        links(
+                                linkWithRel("self").description("해당 answer 수정"),
+                                linkWithRel("profile").description("해당 Rest API profile 이동")
+                        ),
+                        requestHeaders(
+                                headerWithName(HttpHeaders.ACCEPT).description("accept 헤더"),
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("content type 헤더")
+                        ),
+                        responseHeaders(
+                                headerWithName(HttpHeaders.CONTENT_TYPE).description("Content type - Hal Json")
                         )
                 ))
         ;

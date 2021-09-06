@@ -9,10 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.PropertyMap;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.hateoas.CollectionModel;
-import org.springframework.hateoas.EntityModel;
-import org.springframework.hateoas.Link;
-import org.springframework.hateoas.MediaTypes;
+import org.springframework.hateoas.*;
 import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
@@ -22,6 +19,7 @@ import javax.swing.text.html.parser.Entity;
 import javax.validation.Valid;
 
 import java.net.URI;
+import java.net.http.HttpResponse;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -101,8 +99,16 @@ public class AnswerController {
     // TODO answer 삭제
     @DeleteMapping("/{id}")
     public ResponseEntity deleteAnswer(@PathVariable Long id){
+        this.answerService.deleteAnswer(id);
 
-        return ResponseEntity.ok().build();
+        Link self = linkTo(AnswerController.class).slash(id).withRel("self");
+        Link profile = Link.of("/docs/answer.html#delete-answer").withRel("profile");
+        List<Link> links = List.of(self, profile);
+
+        RepresentationModel res = RepresentationModel.of(null);
+        res.add(links);
+
+        return ResponseEntity.ok(res);
     }
 
     // TODO Bad Request

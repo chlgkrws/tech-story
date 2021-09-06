@@ -39,4 +39,8 @@ public class AnswerService {
 
         return reply;
     }
+
+    public void deleteAnswer(Long id) {
+        this.answerRepository.deleteAnswer(id);       // UseYn 으로 변경 not delete
+    }
 }

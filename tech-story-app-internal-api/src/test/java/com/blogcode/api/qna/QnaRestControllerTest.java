@@ -73,6 +73,7 @@ class QnaRestControllerTest {
     MemberRepository memberRepository;
 
     @Test
+    @Order(1)
     @DisplayName("Qna 생성")
     public void createQna() throws Exception{
         Member member = getRandomMember();
