@@ -199,18 +199,19 @@ public class QnaRestController {
         String cookies = request.getHeader("cookie");
         
         if(cookies == null){
-            response.addCookie(new Cookie("view_cookie","cookie|board|"+id));
-            this.qnaService.increaseOneViewCount(id);
+            increaseOneView(response, id);
 
         }else{
             if(!cookies.contains("cookie|board|"+id)){
-                response.addCookie(new Cookie("view_cookie","cookie|board|"+id));
-                this.qnaService.increaseOneViewCount(id);
+                increaseOneView(response, id);
             }
         }
     }
 
-    
+    public void increaseOneView(HttpServletResponse response, Long id){
+        response.addCookie(new Cookie("view_cookie","cookie|board|"+id));
+        this.qnaService.increaseOneViewCount(id);
+    }
 
     // TODO Bad Request 
     public ResponseEntity badRequest(Errors errors){

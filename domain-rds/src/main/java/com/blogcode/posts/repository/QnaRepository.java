@@ -13,6 +13,6 @@ import java.util.Optional;
 public interface QnaRepository extends JpaRepository<Posts, Long> {
 
     @Modifying
-    @Query("update Posts p set views = views + 1 where posts_id = :id")
+    @Query("update Posts p set views = views + 1 where id = :id")
     public void increaseOneViews(@Param("id")Long id);
 }
