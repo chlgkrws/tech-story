@@ -35,6 +35,11 @@ public class QnaService {
         return this.qnaRepository.findAll(pageable);
     }
 
+    // 조회 수 증가
+    public void increaseOneViewCount(Long id) {
+        this.qnaRepository.increaseOneViews(id);
+    }
+
     // TODO MapStruct
     public void qnaToEntity(QnaDTO qnaDTO, Posts posts) {
         posts.setTitle(qnaDTO.getTitle());

@@ -26,7 +26,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.HashMap;
@@ -87,11 +89,11 @@ public class QnaRestController {
 
     // TODO link 정보 추가
     @GetMapping("/{id}")
-    public ResponseEntity getQna(HttpServletRequest request, @PathVariable Long id){
+    public ResponseEntity getQna(HttpServletRequest request, HttpServletResponse response, @PathVariable Long id){
         Posts posts = this.qnaRepository.findById(id).orElseThrow(() -> new NoSuchElementException());
 
         // TODO qna 조회수
-        updatedViews(request);
+        updatedViews(request, response, id);
 
         WebMvcLinkBuilder self = linkTo(QnaRestController.class);
         EntityModel<Posts> resQna = EntityModel.of(posts);
@@ -191,10 +193,24 @@ public class QnaRestController {
         return ResponseEntity.ok().build();
     }
 
-    // TODO qna 조회수
-    public void updatedViews(HttpServletRequest request){
+    // qna 조회수
+    // TODO IP 기억 방법으로 배치를 통해 최적화 진행(하루 단위)
+    public void updatedViews(HttpServletRequest request, HttpServletResponse response, Long id){
+        String cookies = request.getHeader("cookie");
+        
+        if(cookies == null){
+            response.addCookie(new Cookie("view_cookie","cookie|board|"+id));
+            this.qnaService.increaseOneViewCount(id);
 
+        }else{
+            if(!cookies.contains("cookie|board|"+id)){
+                response.addCookie(new Cookie("view_cookie","cookie|board|"+id));
+                this.qnaService.increaseOneViewCount(id);
+            }
+        }
     }
+
+    
 
     // TODO Bad Request 
     public ResponseEntity badRequest(Errors errors){
