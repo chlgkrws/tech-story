@@ -26,6 +26,9 @@ public class MainController {
         modelAndView.setViewName("main");
 
         response.setHeader("Access-Control-Allow-Origin", "*");
+        response.setHeader("Access-Control-Allow-Headers", "X-Requested-With");
+        response.setHeader("Access-Control-Allow-Credentials", "true");
+        response.setHeader("Access-Control-Allow-Methods", "*");
 
         return modelAndView;
     }
