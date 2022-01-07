@@ -43,7 +43,6 @@ public class AnswerController {
     // answer 조회
     @GetMapping("/{postId}")
     public ResponseEntity queryAnswer(@PathVariable Long postId){
-
         List<Reply> AnswerList = this.answerService.findAnswerList(postId);
 
         WebMvcLinkBuilder self = linkTo(AnswerController.class);
@@ -58,7 +57,6 @@ public class AnswerController {
     // answer 생성
     @PostMapping
     public ResponseEntity createAnswer(@RequestBody @Valid AnswerDTO answerDTO, Errors errors){
-
         if(errors.hasErrors()){
             return badRequest(errors);
         }
@@ -84,7 +82,6 @@ public class AnswerController {
     // TODO answer 수정
     @PutMapping("/{id}")
     public ResponseEntity updateAnswer(@PathVariable Long id, @RequestBody @Valid AnswerDTO answerDTO, Errors errors){
-
         Reply reply = this.answerService.updateAnswer(id, answerDTO);
 
         WebMvcLinkBuilder self = linkTo(AnswerController.class);
@@ -113,7 +110,6 @@ public class AnswerController {
 
     // TODO Bad Request
     public ResponseEntity badRequest(Errors errors){
-
         EntityModel<Errors> resErrors = EntityModel.of(errors);
         resErrors.add(Link.of(frontURI).withRel("index"));
         return ResponseEntity.badRequest().body(resErrors);

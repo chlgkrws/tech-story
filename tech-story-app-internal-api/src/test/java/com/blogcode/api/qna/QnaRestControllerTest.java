@@ -47,8 +47,7 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
 @SpringBootTest(classes = InternalApiApplication.class)
@@ -302,6 +301,21 @@ class QnaRestControllerTest {
                         )
                 ));
 
+        ;
+    }
+
+    @Test
+    @DisplayName("Qna 조회 - 응답에 쿠키 포함하기")
+    public void getQnaDetail_Cookie() throws Exception {
+        this.mockMvc.perform(get("/api/qna/1")
+                .accept(MediaTypes.HAL_JSON_VALUE)
+                .header("X-Forwarded-Proto", "http")
+                .header("X-Forwarded-Host","localhost")
+                .header("X-Forwarded-Port", "8084")
+        )
+                .andExpect(status().isOk())
+                .andExpect(header().exists("set-cookie"))
+                .andDo(print())
         ;
     }
 
