@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.NoSuchElementException;
+
 /**
  * <pre>
  * com.blogcode.com.blogcode.service
@@ -34,6 +36,10 @@ public class MemberService {
     private final MemberRepository memberRepository;
     private final EmailSender emailSender;
 
+
+    public Member findById(Long memberId) {
+        return this.memberRepository.findById(memberId).orElseThrow(() -> new NoSuchElementException());
+    }
 
     public Long signUp (Member member) {
         return memberRepository.save(member).getId();
